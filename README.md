@@ -1,430 +1,499 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rusça Kapsamlı Kelime ve Gramer Defterim</title>
-    <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #111111;
-            --border-color: #111111;
-            --card-bg: #f9f9f9;
-            --hover-bg: #111111;
-            --hover-text: #ffffff;
-        }
-
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        header {
-            text-align: center;
-            border-bottom: 3px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        h1 {
-            font-size: 2.3rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        p.subtitle {
-            font-style: italic;
-            margin-top: 5px;
-        }
-
-        /* Not Kutusu (Açılıp Kapanabilir) */
-        .notes-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .notes-toggle-btn {
-            background: var(--text-color);
-            color: var(--bg-color);
-            border: 2px solid var(--border-color);
-            padding: 10px 15px;
-            font-family: inherit;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 3px 3px 0px #000;
-        }
-
-        .notes-toggle-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #000;
-        }
-
-        .notes-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 45px;
-            width: 360px;
-            max-height: 480px;
-            overflow-y: auto;
-            background: var(--bg-color);
-            border: 2px solid var(--border-color);
-            padding: 15px;
-            box-shadow: 5px 5px 0px #000;
-            font-size: 0.8rem;
-        }
-
-        .notes-content.active {
-            display: block;
-        }
-
-        .notes-content h3 {
-            margin-top: 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-            font-size: 0.95rem;
-        }
-
-        .notes-content ul {
-            padding-left: 15px;
-            margin-bottom: 0;
-        }
-
-        .notes-content li {
-            margin-bottom: 8px;
-        }
-
-        /* Arama Çubuğu */
-        .search-box {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .search-box input {
-            width: 60%;
-            max-width: 400px;
-            padding: 10px;
-            font-family: inherit;
-            border: 2px solid var(--border-color);
-            font-size: 1rem;
-            outline: none;
-        }
-
-        /* Liste Düzeni */
-        .category-section {
-            margin-bottom: 40px;
-            border: 2px solid var(--border-color);
-            padding: 20px;
-            background: var(--card-bg);
-            box-shadow: 4px 4px 0px #000;
-        }
-
-        .category-section h2 {
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-top: 0;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-        }
-
-        .word-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-        }
-
-        .word-card {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            transition: 0.2s;
-        }
-
-        .word-card:hover {
-            background: var(--hover-bg);
-            color: var(--hover-text);
-        }
-
-        .ru {
-            font-weight: bold;
-            font-size: 1.05rem;
-        }
-
-        .pron {
-            font-style: italic;
-            opacity: 0.8;
-            font-size: 0.85rem;
-        }
-
-        .tr {
-            margin-top: 4px;
-            font-weight: bold;
-        }
-
-        .details {
-            font-size: 0.75rem;
-            margin-top: 6px;
-            border-top: 1px dashed currentColor;
-            padding-top: 4px;
-            opacity: 0.9;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            border-top: 2px solid var(--border-color);
-            padding-top: 20px;
-            font-size: 0.9rem;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Not Kutusu Butonu ve Paneli -->
-    <div class="notes-container">
-        <button class="notes-toggle-btn" onclick="toggleNotes()">📌 Gramer Notları</button>
-        <div class="notes-content" id="notesPanel">
-            <h3>Temel Kurallar & İpuçları</h3>
-            <ul>
-                <li><strong>Cinsiyetler:</strong> Eril sessiz harfle veya -й ile biter[span_0](start_span)[span_0](end_span); dişil genellikle -а/-я ile biter[span_1](start_span)[span_1](end_span); nötr -о/-е ile biter[span_2](start_span)[span_2](end_span). -мя ile bitenler nötr istisnadır (время, имя vb.)[span_3](start_span)[span_3](end_span).</li>
-                <li><strong>7 Harf İmla Kuralı:</strong> Г, К, Х, Ж, Ш, Ч, Щ harflerinden sonra asla -ы yazılmaz, mutlaka -и yazılır[span_4](start_span)[span_4](end_span).</li>
-                <li><strong>Vurgu Değişimi:</strong> Bazı kelimeler çoğul yapılırken vurgu son heceye veya -а/-я ekine kayar (дом ➔ дома)[span_5](start_span)[span_5](end_span).</li>
-                <li><strong>Pluralia Tantum (Sadece Çoğul):</strong> ножницы, очки, деньги, сутки, каникулы gibi kelimelerin tekil hali yoktur[span_6](start_span)[span_6](end_span).</li>
-                <li><strong>İndeklinabl (Değişmeyenler):</strong> пальто, кино, метро, кафе gibi yabancı kökenli nötr kelimeler hiç ek almaz[span_7](start_span)[span_7](end_span).</li>
-            </ul>
-        </div>
-    </div>
-
-    <header>
-        <h1>Rusça Kapsamlı Kelime Defterim</h1>
-        <p class="subtitle">Tüm PDF ve defter notları, cinsiyetler, çoğullar ve kurallarla güncellendi!</p>
-    </header>
-
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Kelime veya anlam ara..." onkeyup="searchWords()">
-    </div>
-
-    <main id="contentArea">
-        <!-- 1. KISIM: İNSANLAR VE KİŞİLER -->
-        <section class="category-section">
-            <h2>1. İnsanlar, Kişiler ve Meslekler</h2>
-            <div class="word-grid">
-                <div class="word-card">
-                    <div class="ru">мальчик</div>
-                    <div class="pron">(mal'çik)</div>
-                    <div class="tr">= Erkek çocuk</div>
-                    <div class="details">Eril (Он)[span_8](start_span)[span_8](end_span) | Çoğul: мальчики[span_9](start_span)[span_9](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">девочка</div>
-                    <div class="pron">(devoçka)</div>
-                    <div class="tr">= Kız çocuk</div>
-                    <div class="details">Dişil (Она)[span_10](start_span)[span_10](end_span) | Çoğul: девочки[span_11](start_span)[span_11](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">ребёнок ➔ дети</div>
-                    <div class="pron">(rebyonok ➔ deti)</div>
-                    <div class="tr">= Çocuk / Çocuklar</div>
-                    <div class="details">Kökten değişen düzensiz çoğul[span_12](start_span)[span_12](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">человек ➔ люди</div>
-                    <div class="pron">(çelovek ➔ lyudi)</div>
-                    <div class="tr">= İnsan / İnsanlar</div>
-                    <div class="details">Kökten değişen düzensiz çoğul[span_13](start_span)[span_13](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">друг ➔ друзья</div>
-                    <div class="pron">(druk ➔ druz'ya)</div>
-                    <div class="tr">= Arkadaş / Arkadaşlar</div>
-                    <div class="details">-ЬЯ eki alan çoğul[span_14](start_span)[span_14](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">брат ➔ братья</div>
-                    <div class="pron">(brat ➔ brat'ya)</div>
-                    <div class="tr">= Erkek kardeş / Kardeşler</div>
-                    <div class="details">-ЬЯ eki alan çoğul[span_15](start_span)[span_15](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">сын ➔ сыновья</div>
-                    <div class="pron">(sın ➔ sınov'ya)</div>
-                    <div class="tr">= Oğul / Oğullar</div>
-                    <div class="details">-ЬЯ eki alan çoğul[span_16](start_span)[span_16](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">мать / дочь</div>
-                    <div class="pron">(mat' / doç')</div>
-                    <div class="tr">= Anne / Kız evlat</div>
-                    <div class="details">Çoğul: матери / дочери[span_17](start_span)[span_17](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">крестьянин ➔ крестьяне</div>
-                    <div class="pron">(krest'yanin ➔ krest'yane)</div>
-                    <div class="tr">= Köylü / Köylüler</div>
-                    <div class="details">-ин düşer, -АНЕ eklenir[span_18](start_span)[span_18](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">врач / учитель</div>
-                    <div class="pron">(vraç / uçitel')</div>
-                    <div class="tr">= Doktor / Öğretmen</div>
-                    <div class="details">Meslek isimleri ve istisnalar[span_19](start_span)[span_19](end_span)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. KISIM: MEKANLAR VE NESNELER -->
-        <section class="category-section">
-            <h2>2. Mekanlar, Eşyalar ve Nesneler</h2>
-            <div class="word-grid">
-                <div class="word-card">
-                    <div class="ru">дом ➔ дома</div>
-                    <div class="pron">(dom ➔ doma)</div>
-                    <div class="tr">= Ev / Evler</div>
-                    <div class="details">Eril, vurgu değişimi (-а)[span_20](start_span)[span_20](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">город ➔ города</div>
-                    <div class="pron">(gorod ➔ goroda)</div>
-                    <div class="tr">= Şehir / Şehirler</div>
-                    <div class="details">Eril, vurgu değişimi (-а)[span_21](start_span)[span_21](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">окно ➔ окна</div>
-                    <div class="pron">(akno ➔ okna)</div>
-                    <div class="tr">= Pencere / Pencereler</div>
-                    <div class="details">Nötr, -о ➔ -а kuralı[span_22](start_span)[span_22](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">море ➔ моря</div>
-                    <div class="pron">(more ➔ morya)</div>
-                    <div class="tr">= Deniz / Denizler</div>
-                    <div class="details">Nötr, -е ➔ -я kuralı[span_23](start_span)[span_23](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">время ➔ времена</div>
-                    <div class="pron">(vremya ➔ vremena)</div>
-                    <div class="tr">= Zaman / Zamanlar</div>
-                    <div class="details">-мя ile biten nötr istisna[span_24](start_span)[span_24](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">стул ➔ стулья</div>
-                    <div class="pron">(stul ➔ stul'ya)</div>
-                    <div class="tr">= Sandalye / Sandalyeler</div>
-                    <div class="details">-ЬЯ eki alan özel çoğul[span_25](start_span)[span_25](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">дерево ➔ деревья</div>
-                    <div class="pron">(derevo ➔ derev'ya)</div>
-                    <div class="tr">= Ağaç / Ağaçlar</div>
-                    <div class="details">-ЬЯ eki alan özel çoğul[span_26](start_span)[span_26](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">паспорт ➔ паспорта</div>
-                    <div class="pron">(pasport ➔ pasporta)</div>
-                    <div class="tr">= Pasaport / Pasaportlar</div>
-                    <div class="details">Özel vurgulu çoğul (-а)[span_27](start_span)[span_27](end_span)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. KISIM: SADECE TEKİL VE SADECE ÇOĞUL KELİMELER -->
-        <section class="category-section">
-            <h2>3. Sadece Tekil ve Sadece Çoğul Kullanılanlar</h2>
-            <div class="word-grid">
-                <div class="word-card">
-                    <div class="ru">молоко / мясо / соль</div>
-                    <div class="pron">(moloko / myaso / sol')</div>
-                    <div class="tr">= Süt / Et / Tuz</div>
-                    <div class="details">Daima tekil (Madde ve gıda ürünleri)[span_28](start_span)[span_28](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">мебель / одежда</div>
-                    <div class="pron">(mebel' / odejda)</div>
-                    <div class="tr">= Mobilya / Giysi</div>
-                    <div class="details">Daima tekil (Topluluk isimleri)[span_29](start_span)[span_29](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">ножницы</div>
-                    <div class="pron">(nojnıtsı)</div>
-                    <div class="tr">= Makas</div>
-                    <div class="details">Daima çoğul (Pluralia Tantum)[span_30](start_span)[span_30](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">очки / брюки / весы</div>
-                    <div class="pron">(oçki / bryuki / vesı)</div>
-                    <div class="tr">= Gözlük / Pantolon / Terazi</div>
-                    <div class="details">Daima çoğul (Parçalı eşyalar)[span_31](start_span)[span_31](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">деньги / сутки / каникулы</div>
-                    <div class="pron">(den'gi / sutki / kanikulı)</div>
-                    <div class="tr">= Para / 24 Saat / Tatil</div>
-                    <div class="details">Daima çoğul (Zaman ve soyut kavramlar)[span_32](start_span)[span_32](end_span)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. KISIM: DEĞİŞMEYEN YABANCI KELİMELER -->
-        <section class="category-section">
-            <h2>4. Değişmeyen Yabancı Kelimeler (İndeklinabl)</h2>
-            <div class="word-grid">
-                <div class="word-card">
-                    <div class="ru">пальто / кино / метро</div>
-                    <div class="pron">(pal'to / kino / metro)</div>
-                    <div class="tr">= Palto / Sinema / Metro</div>
-                    <div class="details">Nötr, hiçbir ek almaz, değişmez[span_33](start_span)[span_33](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">кафе / такси / меню</div>
-                    <div class="pron">(kafe / taksi / menyu)</div>
-                    <div class="tr">= Kafe / Taksi / Menü</div>
-                    <div class="details">Nötr, hiçbir ek almaz, değişmez[span_34](start_span)[span_34](end_span)</div>
-                </div>
-                <div class="word-card">
-                    <div class="ru">жюри / интервью / пианино</div>
-                    <div class="pron">(jyuri / interv'yu / pianino)</div>
-                    <div class="tr">= Jüri / Röportaj / Piyano</div>
-                    <div class="details">Nötr, hiçbir ek almaz, değişmez[span_35](start_span)[span_35](end_span)</div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>Rusça Eksiksiz Çalışma Defteri | GitHub İçin Hazırlandı 🖤🤍</p>
-    </footer>
-
-    <script>
-        // Not kutusunu açıp kapatma fonksiyonu
-        function toggleNotes() {
-            const panel = document.getElementById('notesPanel');
-            panel.classList.toggle('active');
-        }
-
-        // Anlık arama (Filtreleme) fonksiyonu
-        function searchWords() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.word-card');
-
-            cards.forEach(card => {
-                let text = card.innerText.toLowerCase();
-                if (text.includes(input)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+/* Kelime listesi. ru: Rusça, pr: okunuş, tr: Türkçe, note: gramer notu, c: konu kodları */
+const D = {
+"cats": [{"id": "a1", "g": "Resimli Kitap", "n": "Eril isimler"}, {"id": "a2", "g": "Resimli Kitap", "n": "Dişil isimler"}, {"id": "a3", "g": "Resimli Kitap", "n": "Nötr isimler"}, {"id": "a4", "g": "Resimli Kitap", "n": "-Ь ile biten isimler"}, {"id": "a5", "g": "Resimli Kitap", "n": "İstisnalar ve canlılar"}, {"id": "a6", "g": "Resimli Kitap", "n": "Meslek isimleri"}, {"id": "a7", "g": "Resimli Kitap", "n": "Yabancı kökenli"}, {"id": "a8", "g": "Resimli Kitap", "n": "Çoğul kuralları"}, {"id": "a9", "g": "Resimli Kitap", "n": "Nötr çoğullar"}, {"id": "a10", "g": "Resimli Kitap", "n": "Özel çoğullar"}, {"id": "a11", "g": "Resimli Kitap", "n": "Yalnızca tekil"}, {"id": "a12", "g": "Resimli Kitap", "n": "Yalnızca çoğul"}, {"id": "b1", "g": "Resimsiz Kitap", "n": "İnsanlar ve meslekler"}, {"id": "b2", "g": "Resimsiz Kitap", "n": "Mekanlar ve eşyalar"}, {"id": "b3", "g": "Resimsiz Kitap", "n": "Akademik kavramlar"}, {"id": "b4", "g": "Resimsiz Kitap", "n": "Fiiller"}, {"id": "b5", "g": "Resimsiz Kitap", "n": "Zarflar ve zamanlar"}, {"id": "b6", "g": "Resimsiz Kitap", "n": "Haftanın günleri"}, {"id": "b7", "g": "Resimsiz Kitap", "n": "Zamirler ve bağlaçlar"}],
+"words": [
+{"ru": "дом", "pr": "dom", "tr": "ev / bina", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "трамвай", "pr": "tramvay", "tr": "tramvay", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "спутник", "pr": "sputnik", "tr": "uydu", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "мальчик", "pr": "mal'çik", "tr": "erkek çocuk", "note": "Eril (Он)", "c": ["a1", "b1"]},
+{"ru": "школьник", "pr": "şkol'nik", "tr": "erkek öğrenci", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "Олег", "pr": "Oleg", "tr": "Oleg (erkek ismi)", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "орех", "pr": "oreh", "tr": "fındık / ceviz", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "карандаш", "pr": "karandaş", "tr": "kurşun kalem", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "нож", "pr": "noj", "tr": "bıçak", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "мяч", "pr": "myaç", "tr": "top", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "плащ", "pr": "plaşç", "tr": "yağmurluk", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "хлеб", "pr": "hleb", "tr": "ekmek", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "остров", "pr": "ostrov", "tr": "ada", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "поезд", "pr": "poyezd", "tr": "tren", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "глаз", "pr": "glaz", "tr": "göz", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "стол", "pr": "stol", "tr": "masa", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "костюм", "pr": "kostyum", "tr": "takım elbise", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "магазин", "pr": "magazin", "tr": "mağaza", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "театр", "pr": "teatr", "tr": "tiyatro", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "автобус", "pr": "avtobus", "tr": "otobüs", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "лес", "pr": "les", "tr": "orman", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "космонавт", "pr": "kosmonavt", "tr": "astronot", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "шарф", "pr": "şarf", "tr": "atkı", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "месяц", "pr": "mesyats", "tr": "ay (zaman)", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "музей", "pr": "muzey", "tr": "müze", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "герой", "pr": "geroy", "tr": "kahraman", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "урожай", "pr": "urojay", "tr": "hasat / ürün", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "чай", "pr": "çay", "tr": "çay", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "билет", "pr": "bilet", "tr": "bilet", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "вагон", "pr": "vagon", "tr": "vagon", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "вокзал", "pr": "vokzal", "tr": "tren garı", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "вопрос", "pr": "vopros", "tr": "soru", "note": "Eril (Он)", "c": ["a1", "b3"]},
+{"ru": "врач", "pr": "vraç", "tr": "doktor", "note": "Eril (Он)", "c": ["a1", "b1"]},
+{"ru": "вход", "pr": "vhod", "tr": "giriş", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "герб", "pr": "gerb", "tr": "amblem / arma", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "журнал", "pr": "jurnal", "tr": "dergi", "note": "Eril (Он)", "c": ["a1", "b2"]},
+{"ru": "завод", "pr": "zavod", "tr": "fabrika", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "класс", "pr": "klass", "tr": "sınıf", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "ключ", "pr": "klyuç", "tr": "anahtar", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "лимон", "pr": "limon", "tr": "limon", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "памятник", "pr": "pamyatnik", "tr": "anıt / heykel", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "сахар", "pr": "sahar", "tr": "şeker", "note": "Eril (Он)", "c": ["a1", "a11"]},
+{"ru": "трактор", "pr": "traktor", "tr": "traktör", "note": "Eril (Он)", "c": ["a1"]},
+{"ru": "картина", "pr": "kartina", "tr": "tablo / resim", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "семья", "pr": "sem'ya", "tr": "aile", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "учительница", "pr": "uçitel'nitsa", "tr": "kadın öğretmen", "note": "Dişil (Она)", "c": ["a2", "a6"]},
+{"ru": "ученица", "pr": "uçenitsa", "tr": "kız öğrenci", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "девочка", "pr": "devoçka", "tr": "kız çocuk", "note": "Dişil (Она)", "c": ["a2", "b1"]},
+{"ru": "рыба", "pr": "ryba", "tr": "balık", "note": "Dişil (Она)", "c": ["a2", "a11"]},
+{"ru": "книга", "pr": "kniga", "tr": "kitap", "note": "Dişil (Она)", "c": ["a2", "b2"]},
+{"ru": "доска", "pr": "doska", "tr": "yazı tahtası", "note": "Dişil (Она)", "c": ["a2", "b2"]},
+{"ru": "звезда", "pr": "zvezda", "tr": "yıldız", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "женщина", "pr": "jenşçina", "tr": "kadın", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "луна", "pr": "luna", "tr": "ay (gök cismi)", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "кухня", "pr": "kuhnya", "tr": "mutfak", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "понедельник", "pr": "ponedel'nik", "tr": "Pazartesi", "note": "Eril (Eski kelime)", "c": ["a2"]},
+{"ru": "вторник", "pr": "vtornik", "tr": "Salı", "note": "Eril (Eski kelime)", "c": ["a2"]},
+{"ru": "среда", "pr": "sreda", "tr": "Çarşamba", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "четверг", "pr": "çetverg", "tr": "Perşembe", "note": "Eril (Eski kelime)", "c": ["a2"]},
+{"ru": "пятница", "pr": "pyatnitsa", "tr": "Cuma", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "суббота", "pr": "subbota", "tr": "Cumartesi", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "воскресенье", "pr": "voskresen'ye", "tr": "Pazar", "note": "Nötr (Оно)", "c": ["a2"]},
+{"ru": "демонстрация", "pr": "demonstratsiya", "tr": "gösteri / miting", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "линия", "pr": "liniya", "tr": "çizgi / hat", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "химия", "pr": "himiya", "tr": "kimya", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "география", "pr": "geografiya", "tr": "coğrafya", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "история", "pr": "istoriya", "tr": "tarih", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "буква", "pr": "bukva", "tr": "harf", "note": "Dişil (Она)", "c": ["a2", "b3"]},
+{"ru": "вода", "pr": "voda", "tr": "su", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "голова", "pr": "golova", "tr": "baş / kafa", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "задача", "pr": "zadaça", "tr": "problem / alıştırma", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "комната", "pr": "komnata", "tr": "oda", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "работа", "pr": "rabota", "tr": "iş / çalışma", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "лампа", "pr": "lampa", "tr": "lamba", "note": "Dişil (Она)", "c": ["a2", "b2"]},
+{"ru": "машина", "pr": "maşina", "tr": "araba", "note": "Dişil (Она)", "c": ["a2", "b2"]},
+{"ru": "страна", "pr": "strana", "tr": "ülke", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "улица", "pr": "ulitsa", "tr": "sokak / cadde", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "деревня", "pr": "derevnya", "tr": "köy", "note": "Dişil (Она)", "c": ["a2", "b2"]},
+{"ru": "земля", "pr": "zemlya", "tr": "toprak / dünya", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "песня", "pr": "pesnya", "tr": "şarkı", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "статья", "pr": "stat'ya", "tr": "makale", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "идея", "pr": "ideya", "tr": "fikir", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "армия", "pr": "armiya", "tr": "ordu", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "организация", "pr": "organizatsiya", "tr": "organizasyon", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "профессия", "pr": "professiya", "tr": "meslek", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "станция", "pr": "stantsiya", "tr": "istasyon", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "фамилия", "pr": "familiya", "tr": "soyadı", "note": "Dişil (Она)", "c": ["a2"]},
+{"ru": "письмо", "pr": "pis'mo", "tr": "mektup", "note": "Nötr (Оно)", "c": ["a3", "b2"]},
+{"ru": "платье", "pr": "plat'ye", "tr": "elbise", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "окно", "pr": "okno", "tr": "pencere", "note": "Nötr (Оно)", "c": ["a3", "b2"]},
+{"ru": "кресло", "pr": "kreslo", "tr": "tekli koltuk", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "кольцо", "pr": "kol'tso", "tr": "yüzük", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "лицо", "pr": "litso", "tr": "yüz / çehre", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "лекарство", "pr": "lekarstvo", "tr": "ilaç", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "дерево", "pr": "derevo", "tr": "ağaç", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "яблоко", "pr": "yabloko", "tr": "elma", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "яйцо", "pr": "yaytso", "tr": "yumurta", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "колесо", "pr": "koleso", "tr": "tekerlek", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "озеро", "pr": "ozero", "tr": "göl", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "солнце", "pr": "solntse", "tr": "güneş", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "море", "pr": "more", "tr": "deniz", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "поле", "pr": "pole", "tr": "tarla", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "здание", "pr": "zdaniye", "tr": "bina", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "объявление", "pr": "ob''yavleniye", "tr": "ilan / duyuru", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "расписание", "pr": "raspisaniye", "tr": "tarife / ders programı", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "знамя", "pr": "znamya", "tr": "sancak / bayrak", "note": "Nötr (-мя)", "c": ["a3"]},
+{"ru": "имя", "pr": "imya", "tr": "ad / isim", "note": "Nötr (-мя)", "c": ["a3"]},
+{"ru": "пламя", "pr": "plamya", "tr": "alev", "note": "Nötr (-мя)", "c": ["a3"]},
+{"ru": "время", "pr": "vremya", "tr": "zaman", "note": "Nötr (-мя)", "c": ["a3"]},
+{"ru": "дело", "pr": "delo", "tr": "iş / konu", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "зеркало", "pr": "zerkalo", "tr": "ayna", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "лето", "pr": "leto", "tr": "yaz", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "место", "pr": "mesto", "tr": "yer", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "слово", "pr": "slovo", "tr": "kelime / söz", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "государство", "pr": "gosudarstvo", "tr": "devlet", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "единство", "pr": "yedinstvo", "tr": "birlik", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "искусство", "pr": "iskusstvo", "tr": "sanat", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "качество", "pr": "kaçestvo", "tr": "kalite", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "производство", "pr": "proizvodstvo", "tr": "üretim", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "сердце", "pr": "serdtse", "tr": "kalp", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "счастье", "pr": "sçast'ye", "tr": "mutluluk", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "здоровье", "pr": "zdorov'ye", "tr": "sağlık", "note": "Nötr (Оно)", "c": ["a3", "a11"]},
+{"ru": "горе", "pr": "gore", "tr": "keder", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "училище", "pr": "uçilişçe", "tr": "meslek okulu", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "внимание", "pr": "vnimaniye", "tr": "dikkat", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "движение", "pr": "dvijeniye", "tr": "hareket / trafik", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "занятие", "pr": "zanyatiye", "tr": "ders / etkinlik", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "решение", "pr": "reşeniye", "tr": "karar / çözüm", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "собрание", "pr": "sobraniye", "tr": "toplantı", "note": "Nötr (Оно)", "c": ["a3"]},
+{"ru": "учитель", "pr": "uçitel'", "tr": "öğretmen", "note": "Eril (-тель)", "c": ["a4"]},
+{"ru": "Кремль", "pr": "Krem-l'", "tr": "Kremlin", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "портфель", "pr": "portfel'", "tr": "evrak çantası", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "словарь", "pr": "slovar'", "tr": "sözlük", "note": "Eril (Он)", "c": ["a4", "b2"]},
+{"ru": "календарь", "pr": "kalendar'", "tr": "takvim", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "корабль", "pr": "korabl'", "tr": "gemi", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "рояль", "pr": "royal'", "tr": "piyano", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "дождь", "pr": "dojd'", "tr": "yağmur", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "голубь", "pr": "golub'", "tr": "güvercin", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "лагерь", "pr": "lager'", "tr": "kamp", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "рубль", "pr": "rubl'", "tr": "ruble", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "гость", "pr": "gost'", "tr": "misafir", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "день", "pr": "den'", "tr": "gün", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "зверь", "pr": "zver'", "tr": "vahşi hayvan", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "картофель", "pr": "kartofel'", "tr": "patates", "note": "Eril (Он)", "c": ["a4", "a11"]},
+{"ru": "кашель", "pr": "kaşel'", "tr": "öksürük", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "контроль", "pr": "kontrol'", "tr": "kontrol", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "ноль", "pr": "nol'", "tr": "sıfır", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "огонь", "pr": "ogon'", "tr": "ateş", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "путь", "pr": "put'", "tr": "yol", "note": "Eril (İstisna)", "c": ["a4"]},
+{"ru": "секретарь", "pr": "sekretar'", "tr": "sekreter", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "уголь", "pr": "ugol'", "tr": "kömür", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "фестиваль", "pr": "festival'", "tr": "festival", "note": "Eril (Он)", "c": ["a4"]},
+{"ru": "мать", "pr": "mat'", "tr": "anne", "note": "Dişil (Она)", "c": ["a4", "b1"]},
+{"ru": "дочь", "pr": "doç'", "tr": "kız evlat", "note": "Dişil (Она)", "c": ["a4", "b1"]},
+{"ru": "дверь", "pr": "dver'", "tr": "kapı", "note": "Dişil (Она)", "c": ["a4", "b2"]},
+{"ru": "тетрадь", "pr": "tetrad'", "tr": "defter", "note": "Dişil (Она)", "c": ["a4", "b2"]},
+{"ru": "медаль", "pr": "medal'", "tr": "madalya", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "кровать", "pr": "krovat'", "tr": "yatak", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "ночь", "pr": "noç'", "tr": "gece", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "осень", "pr": "osen'", "tr": "sonbahar", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "соль", "pr": "sol'", "tr": "tuz", "note": "Dişil (Она)", "c": ["a4", "a11"]},
+{"ru": "лошадь", "pr": "loşad'", "tr": "at", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "нефть", "pr": "neft'", "tr": "petrol", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "площадь", "pr": "ploşçad'", "tr": "meydan", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "цепь", "pr": "tsep'", "tr": "zincir", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "болезнь", "pr": "bolezn'", "tr": "hastalık", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "вещь", "pr": "veşç'", "tr": "eşya", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "власть", "pr": "vlast'", "tr": "iktidar", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "жизнь", "pr": "jizn'", "tr": "hayat", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "любовь", "pr": "lyubov'", "tr": "aşk / sevgi", "note": "Dişil (Она)", "c": ["a4", "a11"]},
+{"ru": "молодёжь", "pr": "molodëj", "tr": "gençlik", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "память", "pr": "pamyat'", "tr": "hafıza", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "помощь", "pr": "pomoşç'", "tr": "yardım", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "радость", "pr": "radost'", "tr": "sevinç", "note": "Dişil (-ость)", "c": ["a4"]},
+{"ru": "речь", "pr": "reç'", "tr": "konuşma", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "роль", "pr": "rol'", "tr": "rol", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "степь", "pr": "step'", "tr": "bozkır", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "цель", "pr": "tsel'", "tr": "hedef", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "часть", "pr": "çast'", "tr": "parça", "note": "Dişil (Она)", "c": ["a4"]},
+{"ru": "мужчина", "pr": "mujçina", "tr": "adam / erkek", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "юноша", "pr": "yunoşa", "tr": "delikanlı", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "папа", "pr": "papa", "tr": "baba", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "дедушка", "pr": "deduşka", "tr": "dede", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "дядя", "pr": "dyadya", "tr": "amca / dayı", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "ребёнок", "pr": "rebënok", "tr": "çocuk", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "котёнок", "pr": "kotënok", "tr": "kedi yavrusu", "note": "Eril (-ёнок)", "c": ["a5"]},
+{"ru": "телёнок", "pr": "telënok", "tr": "buzağı", "note": "Eril (-ёнок)", "c": ["a5"]},
+{"ru": "цыплёнок", "pr": "tsıplënok", "tr": "civciv", "note": "Eril (-ёнок)", "c": ["a5"]},
+{"ru": "медвежонок", "pr": "medvejonok", "tr": "ayı yavrusu", "note": "Eril (-онок)", "c": ["a5"]},
+{"ru": "собака", "pr": "sobaka", "tr": "köpek", "note": "Dişil (Она)", "c": ["a5"]},
+{"ru": "бык", "pr": "bık", "tr": "boğa", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "корова", "pr": "korova", "tr": "inek", "note": "Dişil (Она)", "c": ["a5"]},
+{"ru": "петух", "pr": "petuh", "tr": "horoz", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "курица", "pr": "kuritsa", "tr": "tavuk", "note": "Dişil (Она)", "c": ["a5"]},
+{"ru": "слон", "pr": "slon", "tr": "fil", "note": "Eril (Он)", "c": ["a5"]},
+{"ru": "обезьяна", "pr": "obez'yana", "tr": "maymun", "note": "Dişil (Она)", "c": ["a5"]},
+{"ru": "дитя", "pr": "ditya", "tr": "evlat / çocuk", "note": "Nötr (İstisna)", "c": ["a5"]},
+{"ru": "животное", "pr": "jivotnoye", "tr": "hayvan", "note": "Nötr (İstisna)", "c": ["a5"]},
+{"ru": "учитель", "pr": "uçitel'", "tr": "erkek öğretmen", "note": "Eril (Он)", "c": ["a6"]},
+{"ru": "тракторист", "pr": "traktorist", "tr": "erkek traktörcü", "note": "Eril (Он)", "c": ["a6"]},
+{"ru": "трактористка", "pr": "traktoristka", "tr": "kadın traktörcü", "note": "Dişil (Она)", "c": ["a6"]},
+{"ru": "врач", "pr": "vraç", "tr": "doktor / hekim", "note": "Daima Eril Gramer (Он / Она врач)", "c": ["a6"]},
+{"ru": "архитектор", "pr": "arhitektor", "tr": "mimar", "note": "Daima Eril Gramer (Он / Она архитектор)", "c": ["a6"]},
+{"ru": "агроном", "pr": "agronom", "tr": "ziraat mühendisi", "note": "Daima Eril Gramer (Он / Она агроном)", "c": ["a6"]},
+{"ru": "профессор", "pr": "professor", "tr": "profesör", "note": "Daima Eril Gramer (Он / Она профессор)", "c": ["a6"]},
+{"ru": "водитель", "pr": "voditel'", "tr": "şoför / sürücü", "note": "Daima Eril Gramer (Он / Она водитель)", "c": ["a6"]},
+{"ru": "кассир", "pr": "kassir", "tr": "kasiyer", "note": "Daima Eril Gramer (Он / Она кассир)", "c": ["a6"]},
+{"ru": "почтальон", "pr": "poştal'yon", "tr": "postacı", "note": "Daima Eril Gramer (Он / Она почтальон)", "c": ["a6"]},
+{"ru": "фотограф", "pr": "fotograf", "tr": "fotoğrafçı", "note": "Daima Eril Gramer (Он / Она фотограф)", "c": ["a6"]},
+{"ru": "опытный врач", "pr": "opıtnıy vraç", "tr": "deneyimli doktor", "note": "Kadın için de sıfat eril kalır", "c": ["a6"]},
+{"ru": "молодой агроном", "pr": "molodoy agronom", "tr": "genç ziraat mühendisi", "note": "Kadın için de sıfat eril kalır", "c": ["a6"]},
+{"ru": "приехал доктор", "pr": "priyehal doktor", "tr": "doktor geldi (erkek)", "note": "Eril fiil eki (-ø)", "c": ["a6"]},
+{"ru": "приехала доктор", "pr": "priyehala doktor", "tr": "doktor geldi (kadın)", "note": "Dişil fiil eki (-ла)", "c": ["a6"]},
+{"ru": "Хосе", "pr": "Hose", "tr": "Jose", "note": "Erkek ismi Eril (Он)", "c": ["a7"]},
+{"ru": "Гёте", "pr": "Gëte", "tr": "Goethe", "note": "Erkek soyadı Eril (Он)", "c": ["a7"]},
+{"ru": "Неру", "pr": "Neru", "tr": "Nehru", "note": "Erkek soyadı Eril (Он)", "c": ["a7"]},
+{"ru": "Токио", "pr": "Tokio", "tr": "Tokyo", "note": "Şehir ismi (город) Eril (Он)", "c": ["a7"]},
+{"ru": "Капри", "pr": "Kapri", "tr": "Capri", "note": "Ada ismi (остров) Eril (Он)", "c": ["a7"]},
+{"ru": "Эмили", "pr": "Emili", "tr": "Emily", "note": "Kadın ismi Dişil (Она)", "c": ["a7"]},
+{"ru": "Кармен", "pr": "Karmen", "tr": "Carmen", "note": "Kadın ismi Dişil (Она)", "c": ["a7"]},
+{"ru": "Жени", "pr": "Jeni", "tr": "Jenny", "note": "Kadın ismi Dişil (Она)", "c": ["a7"]},
+{"ru": "Виардо", "pr": "Viardo", "tr": "Viardot", "note": "Kadın soyadı Dişil (Она)", "c": ["a7"]},
+{"ru": "Миссисипи", "pr": "Missisipi", "tr": "Mississippi", "note": "Nehir ismi (река) Dişil (Она)", "c": ["a7"]},
+{"ru": "Юманите", "pr": "Yumanite", "tr": "L'Humanité", "note": "Gazete ismi (газета) Dişil (Она)", "c": ["a7"]},
+{"ru": "пальто", "pr": "pal'to", "tr": "palto", "note": "Cansız eşya Nötr (Оно)", "c": ["a7", "a12"]},
+{"ru": "шоссе", "pr": "şosse", "tr": "otoyol / karayolu", "note": "Cansız mekan Nötr (Оно)", "c": ["a7", "a12"]},
+{"ru": "кино", "pr": "kino", "tr": "sinema", "note": "Cansız mekan/sanat Nötr (Оно)", "c": ["a7", "a12"]},
+{"ru": "столы", "pr": "stolı", "tr": "masalar", "note": "Tekil: стол · Sert ünsüz → -Ы", "c": ["a8"]},
+{"ru": "картины", "pr": "kartinı", "tr": "tablolar / resimler", "note": "Tekil: картина · Dişil (-а) → -Ы", "c": ["a8"]},
+{"ru": "рубли", "pr": "rubli", "tr": "rubleler", "note": "Tekil: рубль · Sonu -ь → -И", "c": ["a8"]},
+{"ru": "двери", "pr": "dveri", "tr": "kapılar", "note": "Tekil: дверь · Sonu -ь → -И", "c": ["a8"]},
+{"ru": "трамваи", "pr": "tramvai", "tr": "tramvaylar", "note": "Tekil: трамвай · Sonu -й → -И", "c": ["a8"]},
+{"ru": "песни", "pr": "pesni", "tr": "şarkılar", "note": "Tekil: песня · Sonu -я → -И", "c": ["a8"]},
+{"ru": "линии", "pr": "linii", "tr": "çizgiler / hatlar", "note": "Tekil: линия · Sonu -ия → -И", "c": ["a8"]},
+{"ru": "мальчики", "pr": "mal'çiki", "tr": "erkek çocuklar", "note": "Tekil: мальчик · К + И", "c": ["a8"]},
+{"ru": "девочки", "pr": "devoçki", "tr": "kız çocuklar", "note": "Tekil: девочка · К + И", "c": ["a8"]},
+{"ru": "ноги", "pr": "nogi", "tr": "bacaklar / ayaklar", "note": "Tekil: нога · Г + И", "c": ["a8"]},
+{"ru": "орехи", "pr": "orehi", "tr": "fındıklar / cevizler", "note": "Tekil: орех · Х + И", "c": ["a8"]},
+{"ru": "мячи", "pr": "myaçi", "tr": "toplar", "note": "Tekil: мяч · Ч + И", "c": ["a8"]},
+{"ru": "плащи", "pr": "plaşçi", "tr": "yağmurluklar", "note": "Tekil: плащ · Щ + И", "c": ["a8"]},
+{"ru": "ножи", "pr": "noji", "tr": "bıçaklar", "note": "Tekil: нож · Ж + И", "c": ["a8"]},
+{"ru": "карандаши", "pr": "karandaşii", "tr": "kurşun kalemler", "note": "Tekil: карандаш · Ш + И", "c": ["a8"]},
+{"ru": "окна", "pr": "okna", "tr": "pencereler", "note": "Tekil: окно · -о → -А", "c": ["a9"]},
+{"ru": "письма", "pr": "pis'ma", "tr": "mektuplar", "note": "Tekil: письмо · -о → -А", "c": ["a9"]},
+{"ru": "моря", "pr": "morya", "tr": "denizler", "note": "Tekil: море · -е → -Я", "c": ["a9"]},
+{"ru": "поля", "pr": "polya", "tr": "tarlalar", "note": "Tekil: поле · -е → -Я", "c": ["a9"]},
+{"ru": "объявления", "pr": "ob''yavleniya", "tr": "ilanlar / duyurular", "note": "Tekil: объявление · -ие → -ИЯ", "c": ["a9"]},
+{"ru": "знамёна", "pr": "znamëna", "tr": "sancaklar / bayraklar", "note": "Tekil: знамя · -мя → -ЕНА", "c": ["a9"]},
+{"ru": "времена", "pr": "vremena", "tr": "zamanlar", "note": "Tekil: время · -мя → -ЕНА", "c": ["a9"]},
+{"ru": "имена", "pr": "imena", "tr": "isimler / adlar", "note": "Tekil: имя · -мя → -ЕНА", "c": ["a9"]},
+{"ru": "глаза", "pr": "glaza", "tr": "gözler", "note": "Tekil: глаз · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "номера", "pr": "nomera", "tr": "numaralar / otel odaları", "note": "Tekil: номер · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "паспорта", "pr": "pasporta", "tr": "pasaportlar", "note": "Tekil: паспорт · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "директора", "pr": "direktora", "tr": "müdürler / direktörler", "note": "Tekil: директор · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "мастера", "pr": "mastera", "tr": "ustalar", "note": "Tekil: мастер · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "повара", "pr": "povara", "tr": "aşçılar", "note": "Tekil: повар · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "доктора", "pr": "doktora", "tr": "doktorlar", "note": "Tekil: доктор · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "профессора", "pr": "professora", "tr": "profesörler", "note": "Tekil: профессор · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "адреса", "pr": "adresa", "tr": "adresler", "note": "Tekil: адрес · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "вечера", "pr": "veçera", "tr": "akşamlar", "note": "Tekil: вечер · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "голоса", "pr": "golosa", "tr": "sesler", "note": "Tekil: голос · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "цвета", "pr": "tsveta", "tr": "renkler", "note": "Tekil: цвет · Özel Vurgulu -А", "c": ["a9", "a10"]},
+{"ru": "холода", "pr": "holoda", "tr": "soğuklar", "note": "Tekil: холод · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "учителя", "pr": "uçitelya", "tr": "öğretmenler", "note": "Tekil: учитель · Özel Vurgulu -Я", "c": ["a9"]},
+{"ru": "якоря", "pr": "yakorya", "tr": "çapalar", "note": "Tekil: якорь · Özel Vurgulu -Я", "c": ["a9"]},
+{"ru": "города", "pr": "goroda", "tr": "şehirler", "note": "Tekil: город · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "провода", "pr": "provoda", "tr": "kablolar / teller", "note": "Tekil: провод · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "поезда", "pr": "poyezda", "tr": "trenler", "note": "Tekil: поезд · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "луга", "pr": "luga", "tr": "çayırlar / meralar", "note": "Tekil: луг · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "берега", "pr": "berega", "tr": "sahiller / kıyılar", "note": "Tekil: берег · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "дома", "pr": "doma", "tr": "evler", "note": "Tekil: дом · Özel Vurgulu -А", "c": ["a9", "b2"]},
+{"ru": "острова", "pr": "ostrova", "tr": "adalar", "note": "Tekil: остров · Özel Vurgulu -А", "c": ["a9"]},
+{"ru": "стулья", "pr": "stul'ya", "tr": "sandalyeler", "note": "Tekil: стул · -ЬЯ eki alır", "c": ["a10", "b2"]},
+{"ru": "листья", "pr": "list'ya", "tr": "bitki yaprakları", "note": "Tekil: лист (растения) · -ЬЯ eki alır", "c": ["a10"]},
+{"ru": "деревья", "pr": "derev'ya", "tr": "ağaçlar", "note": "Tekil: дерево · -ЬЯ eki alır", "c": ["a10"]},
+{"ru": "друзья", "pr": "druz'ya", "tr": "arkadaşlar", "note": "Tekil: друг · -ЬЯ eki alır", "c": ["a10", "b1"]},
+{"ru": "сыновья", "pr": "sınov'ya", "tr": "oğullar", "note": "Tekil: сын · -ЬЯ eki alır", "c": ["a10", "b1"]},
+{"ru": "братья", "pr": "brat'ya", "tr": "erkek kardeşler", "note": "Tekil: брат · -ЬЯ eki alır", "c": ["a10", "b1"]},
+{"ru": "крылья", "pr": "krıl'ya", "tr": "kanatlar", "note": "Tekil: крыло · -ЬЯ eki alır", "c": ["a10"]},
+{"ru": "перья", "pr": "per'ya", "tr": "tüyler / kalem uçları", "note": "Tekil: перо · -ЬЯ eki alır", "c": ["a10"]},
+{"ru": "крестьяне", "pr": "krest'yane", "tr": "köylüler", "note": "Tekil: крестьянин · -ин düşer → -АНЕ", "c": ["a10"]},
+{"ru": "англичане", "pr": "angliçane", "tr": "İngilizler", "note": "Tekil: англичанин · -ин düşer → -АНЕ", "c": ["a10"]},
+{"ru": "граждане", "pr": "grajdane", "tr": "vatandaşlar", "note": "Tekil: гражданин · -ин düşer → -АНЕ", "c": ["a10"]},
+{"ru": "болгары", "pr": "bolgarı", "tr": "Bulgarlar", "note": "Tekil: болгарин · Millet ismi özel çoğul", "c": ["a10"]},
+{"ru": "татары", "pr": "tatarı", "tr": "Tatarlar", "note": "Tekil: татарин · Millet ismi özel çoğul", "c": ["a10"]},
+{"ru": "цыгане", "pr": "tsıgane", "tr": "Romanlar / Çingeneler", "note": "Tekil: цыган · Millet ismi özel çoğul", "c": ["a10"]},
+{"ru": "матери", "pr": "materi", "tr": "anneler", "note": "Tekil: мать · Kök değişimi", "c": ["a10", "b1"]},
+{"ru": "дочери", "pr": "doçeri", "tr": "kız evlatlar", "note": "Tekil: дочь · Kök değişimi", "c": ["a10", "b1"]},
+{"ru": "дети / ребята", "pr": "deti / rebyata", "tr": "çocuklar / gençler", "note": "Tekil: ребёнок · Kök değişimi", "c": ["a10"]},
+{"ru": "люди", "pr": "lyudi", "tr": "insanlar", "note": "Tekil: человек · Kök değişimi", "c": ["a10"]},
+{"ru": "цветы", "pr": "tsvety", "tr": "çiçekler", "note": "Tekil: цветок · Çiçek anlamında", "c": ["a10"]},
+{"ru": "яблоки", "pr": "yabloki", "tr": "elmalar", "note": "Tekil: яблоко · Nötr istisna", "c": ["a10"]},
+{"ru": "суда", "pr": "suda", "tr": "gemiler", "note": "Tekil: судно · Kök değişimi", "c": ["a10"]},
+{"ru": "листы", "pr": "listı", "tr": "kâğıt sayfaları", "note": "Tekil: лист (бумаги) · Kâğıt/Karton anlamında", "c": ["a10"]},
+{"ru": "железо", "pr": "jelëzo", "tr": "demir", "note": "Madde / Element · Daima Tekil", "c": ["a11"]},
+{"ru": "медь", "pr": "med'", "tr": "bakır", "note": "Madde / Element · Daima Tekil", "c": ["a11"]},
+{"ru": "алюминий", "pr": "alyuminiy", "tr": "alüminyum", "note": "Madde / Element · Daima Tekil", "c": ["a11"]},
+{"ru": "кислород", "pr": "kislorod", "tr": "oksijen", "note": "Madde / Element · Daima Tekil", "c": ["a11"]},
+{"ru": "молоко", "pr": "moloko", "tr": "süt", "note": "Gıda Ürünü · Daima Tekil", "c": ["a11"]},
+{"ru": "сыр", "pr": "sır", "tr": "peynir", "note": "Gıda Ürünü · Daima Tekil", "c": ["a11"]},
+{"ru": "мясо", "pr": "myaso", "tr": "et", "note": "Gıda Ürünü · Daima Tekil", "c": ["a11"]},
+{"ru": "масло", "pr": "maslo", "tr": "tereyağı / sıvı yağ", "note": "Gıda Ürünü · Daima Tekil", "c": ["a11"]},
+{"ru": "одежда", "pr": "odejda", "tr": "giysi / giyecek", "note": "Topluluk İsimleri · Daima Tekil", "c": ["a11"]},
+{"ru": "обувь", "pr": "obuv'", "tr": "ayakkabı", "note": "Topluluk İsimleri · Daima Tekil", "c": ["a11"]},
+{"ru": "посуда", "pr": "posuda", "tr": "mutfak eşyaları", "note": "Topluluk İsimleri · Daima Tekil", "c": ["a11"]},
+{"ru": "мебель", "pr": "mebel'", "tr": "mobilya", "note": "Topluluk İsimleri · Daima Tekil", "c": ["a11"]},
+{"ru": "молодёжь", "pr": "molodëj", "tr": "gençlik / gençler", "note": "Topluluk İsimleri · Daima Tekil", "c": ["a11"]},
+{"ru": "капуста", "pr": "kapusta", "tr": "lahana", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "свёкла", "pr": "svëkla", "tr": "pancar", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "морковь", "pr": "morkov'", "tr": "havuç", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "лук", "pr": "luk", "tr": "soğan", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "чеснок", "pr": "çesnok", "tr": "sarımsak", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "виноград", "pr": "vinograd", "tr": "üzüm", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "малина", "pr": "malina", "tr": "ahududu", "note": "Sebze / Meyve · Daima Tekil", "c": ["a11"]},
+{"ru": "ножницы", "pr": "nojnıtsı", "tr": "makas", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "очки", "pr": "oçki", "tr": "gözlük", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "брюки", "pr": "bryuki", "tr": "pantolon", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "весы", "pr": "vesı", "tr": "terazi / tartı", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "деньги", "pr": "den'gi", "tr": "para", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "ворота", "pr": "vorota", "tr": "bahçe / kale kapısı", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "часы", "pr": "çası", "tr": "saat (kol/duvar)", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "санки", "pr": "sanki", "tr": "kızak", "note": "Parçalı Eşya · Daima Çoğul", "c": ["a12"]},
+{"ru": "чернила", "pr": "çernila", "tr": "mürekkep", "note": "Ürün / Madde · Daima Çoğul", "c": ["a12"]},
+{"ru": "духи", "pr": "duhi", "tr": "parfüm", "note": "Ürün / Madde · Daima Çoğul", "c": ["a12"]},
+{"ru": "консервы", "pr": "konservı", "tr": "konserve", "note": "Ürün / Madde · Daima Çoğul", "c": ["a12"]},
+{"ru": "сутки", "pr": "sutki", "tr": "24 saat / bir gün-gece", "note": "Zaman / Soyut · Daima Çoğul", "c": ["a12"]},
+{"ru": "каникулы", "pr": "kanikulı", "tr": "okul tatili", "note": "Zaman / Soyut · Daima Çoğul", "c": ["a12"]},
+{"ru": "переговоры", "pr": "peregovorı", "tr": "müzakereler", "note": "Zaman / Soyut · Daima Çoğul", "c": ["a12"]},
+{"ru": "радио", "pr": "radio", "tr": "radyo", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12", "b2"]},
+{"ru": "метро", "pr": "metro", "tr": "metro", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "кафе", "pr": "kafe", "tr": "kafe", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "такси", "pr": "taksi", "tr": "taksi", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "жюри", "pr": "jyuri", "tr": "jüri", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "меню", "pr": "menyu", "tr": "menü", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "интервью", "pr": "interv'yu", "tr": "mülakat / röportaj", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "пианино", "pr": "pianino", "tr": "piyano", "note": "Nötr · Çekimlenmez / Değişmez", "c": ["a12"]},
+{"ru": "маршрутное такси", "pr": "marşrutnoye taksi", "tr": "dolmuş / hatlı taksi", "note": "Nötr · Çekimlenme", "c": ["a12"]},
+{"ru": "ребёнок", "pr": "rebënok", "tr": "Çocuk (tekil)", "note": "", "c": ["b1"]},
+{"ru": "дети", "pr": "deti", "tr": "Çocuklar (çoğul)", "note": "", "c": ["b1"]},
+{"ru": "человек", "pr": "çelovek", "tr": "İnsan (tekil)", "note": "", "c": ["b1"]},
+{"ru": "люди", "pr": "lyudi", "tr": "İnsanlar / Halk (çoğul)", "note": "", "c": ["b1"]},
+{"ru": "брат", "pr": "brat", "tr": "Erkek kardeş", "note": "", "c": ["b1"]},
+{"ru": "сестра", "pr": "sestra", "tr": "Kız kardeş", "note": "", "c": ["b1"]},
+{"ru": "сёстры", "pr": "sëstrı", "tr": "Kız kardeşler", "note": "", "c": ["b1"]},
+{"ru": "отец", "pr": "otets", "tr": "Baba", "note": "", "c": ["b1"]},
+{"ru": "сын", "pr": "sın", "tr": "Oğul / Erkek evlat", "note": "", "c": ["b1"]},
+{"ru": "друг", "pr": "drug", "tr": "Arkadaş / Dost", "note": "", "c": ["b1"]},
+{"ru": "товарищ", "pr": "tavarişç", "tr": "Yoldaş / Arkadaş", "note": "", "c": ["b1"]},
+{"ru": "студент", "pr": "student", "tr": "Erkek üniversite öğrencisi", "note": "", "c": ["b1"]},
+{"ru": "студентка", "pr": "studentka", "tr": "Kız üniversite öğrencisi", "note": "", "c": ["b1"]},
+{"ru": "ученик", "pr": "uçenik", "tr": "Okul öğrencisi (erkek)", "note": "", "c": ["b1"]},
+{"ru": "преподаватель", "pr": "prepodavatel'", "tr": "Öğretmen / Öğretim görevlisi", "note": "", "c": ["b1"]},
+{"ru": "инженер", "pr": "injener", "tr": "Mühendis", "note": "", "c": ["b1"]},
+{"ru": "лаборант", "pr": "laborant", "tr": "Laborant", "note": "", "c": ["b1"]},
+{"ru": "улица", "pr": "ulitsa", "tr": "Cadde / Sokak", "note": "", "c": ["b2"]},
+{"ru": "город", "pr": "gorod", "tr": "Şehir", "note": "", "c": ["b2"]},
+{"ru": "школа", "pr": "şkola", "tr": "Okul", "note": "", "c": ["b2"]},
+{"ru": "университет", "pr": "universitet", "tr": "Üniversite", "note": "", "c": ["b2"]},
+{"ru": "аудитория", "pr": "auditoriya", "tr": "Derslik / Amfi", "note": "", "c": ["b2"]},
+{"ru": "лаборатория", "pr": "laboratoriya", "tr": "Laboratuvar", "note": "", "c": ["b2"]},
+{"ru": "общежитие", "pr": "obşçejitiye", "tr": "Öğrenci yurdu", "note": "", "c": ["b2"]},
+{"ru": "магазин", "pr": "magazin", "tr": "Mağaza / Dükkan", "note": "", "c": ["b2"]},
+{"ru": "киоск", "pr": "kiosk", "tr": "Büfe / Stant", "note": "", "c": ["b2"]},
+{"ru": "фабрика", "pr": "fabrika", "tr": "Fabrika", "note": "", "c": ["b2"]},
+{"ru": "завод", "pr": "zavod", "tr": "İmalathane / Fabrika", "note": "", "c": ["b2"]},
+{"ru": "парк", "pr": "park", "tr": "Park", "note": "", "c": ["b2"]},
+{"ru": "сад", "pr": "sad", "tr": "Bahçe", "note": "", "c": ["b2"]},
+{"ru": "мост", "pr": "most", "tr": "Köprü", "note": "", "c": ["b2"]},
+{"ru": "стадион", "pr": "stadion", "tr": "Stadyum", "note": "", "c": ["b2"]},
+{"ru": "бассейн", "pr": "basseyin", "tr": "Havuz", "note": "", "c": ["b2"]},
+{"ru": "станция", "pr": "stantsiya", "tr": "İstasyon / Gar", "note": "", "c": ["b2"]},
+{"ru": "стул", "pr": "stul", "tr": "Sandalye", "note": "", "c": ["b2"]},
+{"ru": "шкаф", "pr": "şkaf", "tr": "Dolap / Gardırop", "note": "", "c": ["b2"]},
+{"ru": "кресло", "pr": "kreslo", "tr": "Tekli koltuk / Berjer", "note": "", "c": ["b2"]},
+{"ru": "ваза", "pr": "vaza", "tr": "Vazo", "note": "", "c": ["b2"]},
+{"ru": "учебник", "pr": "uçebnik", "tr": "Ders kitabı", "note": "", "c": ["b2"]},
+{"ru": "газета", "pr": "gazeta", "tr": "Gazete", "note": "", "c": ["b2"]},
+{"ru": "ручка", "pr": "ruçka", "tr": "Kalem (Tükenmez/Dolma)", "note": "", "c": ["b2"]},
+{"ru": "конверт", "pr": "konvert", "tr": "Mektup zarfı", "note": "", "c": ["b2"]},
+{"ru": "телевизор", "pr": "televizor", "tr": "Televizyon", "note": "", "c": ["b2"]},
+{"ru": "магнитофон", "pr": "magnitofon", "tr": "Kasetçalar / Teyp", "note": "", "c": ["b2"]},
+{"ru": "портфель", "pr": "portfel'", "tr": "Çanta / Evrak çantası", "note": "", "c": ["b2"]},
+{"ru": "марка", "pr": "marka", "tr": "Posta pulu", "note": "", "c": ["b2"]},
+{"ru": "фотография", "pr": "fotografiya", "tr": "Fotoğraf", "note": "", "c": ["b2"]},
+{"ru": "фильм", "pr": "fil'm", "tr": "Film", "note": "", "c": ["b2"]},
+{"ru": "урок", "pr": "urok", "tr": "Ders", "note": "", "c": ["b3"]},
+{"ru": "текст", "pr": "tekst", "tr": "Metin", "note": "", "c": ["b3"]},
+{"ru": "роман", "pr": "roman", "tr": "Roman", "note": "", "c": ["b3"]},
+{"ru": "рассказ", "pr": "raskaz", "tr": "Hikaye", "note": "", "c": ["b3"]},
+{"ru": "предложение", "pr": "predlojeniye", "tr": "Cümle", "note": "", "c": ["b3"]},
+{"ru": "слово", "pr": "slovo", "tr": "Kelime", "note": "", "c": ["b3"]},
+{"ru": "правило", "pr": "pravilo", "tr": "Kural", "note": "", "c": ["b3"]},
+{"ru": "упражнение", "pr": "uprajneniye", "tr": "Alıştırma", "note": "", "c": ["b3"]},
+{"ru": "глагол", "pr": "glagol", "tr": "Fiil", "note": "", "c": ["b3"]},
+{"ru": "алфавит", "pr": "alfavit", "tr": "Alfabe", "note": "", "c": ["b3"]},
+{"ru": "ответ", "pr": "otvet", "tr": "Cevap / Yanıt", "note": "", "c": ["b3"]},
+{"ru": "диалог", "pr": "dialog", "tr": "Diyalog", "note": "", "c": ["b3"]},
+{"ru": "диктант", "pr": "diktant", "tr": "Dikte / Yazılı çalışma", "note": "", "c": ["b3"]},
+{"ru": "лекция", "pr": "lektsiya", "tr": "Ders / Konferans / Birlik", "note": "", "c": ["b3"]},
+{"ru": "экскурсия", "pr": "ekskursiya", "tr": "Gezi / Şehir turu", "note": "", "c": ["b3"]},
+{"ru": "ошибка", "pr": "oşibka", "tr": "Hata / Yanlış", "note": "", "c": ["b3"]},
+{"ru": "домашнее задание", "pr": "domaşneye zadaniye", "tr": "Ev ödevi", "note": "", "c": ["b3"]},
+{"ru": "класс", "pr": "klass", "tr": "Sınıf / Derslik", "note": "", "c": ["b3"]},
+{"ru": "язык", "pr": "yazık", "tr": "Dil", "note": "", "c": ["b3"]},
+{"ru": "русский язык", "pr": "russkiy yazık", "tr": "Rusça", "note": "", "c": ["b3"]},
+{"ru": "английский язык", "pr": "angliyskiy yazık", "tr": "İngilizce", "note": "", "c": ["b3"]},
+{"ru": "шахматы", "pr": "şahmatı", "tr": "Satranç", "note": "", "c": ["b3"]},
+{"ru": "футбол", "pr": "futbol", "tr": "Futbol", "note": "", "c": ["b3"]},
+{"ru": "теннис", "pr": "tennis", "tr": "Tenis", "note": "", "c": ["b3"]},
+{"ru": "читать", "pr": "çitat'", "tr": "Okumak", "note": "", "c": ["b4"]},
+{"ru": "писать", "pr": "pisat'", "tr": "Yazmak", "note": "", "c": ["b4"]},
+{"ru": "повторять", "pr": "povtoryat'", "tr": "Tekrar etmek", "note": "", "c": ["b4"]},
+{"ru": "работать", "pr": "rabotat'", "tr": "Çalışmak", "note": "", "c": ["b4"]},
+{"ru": "отдыхать", "pr": "otdıhat'", "tr": "Dinlenmek / Tatil yapmak", "note": "", "c": ["b4"]},
+{"ru": "гулять", "pr": "gulyat'", "tr": "Gezmek / Dolaşmak", "note": "", "c": ["b4"]},
+{"ru": "знать", "pr": "znat'", "tr": "Bilmek", "note": "", "c": ["b4"]},
+{"ru": "слушать", "pr": "sluşat'", "tr": "Dinlemek", "note": "", "c": ["b4"]},
+{"ru": "понимать", "pr": "ponimat'", "tr": "Anlamak", "note": "", "c": ["b4"]},
+{"ru": "отвечать", "pr": "otveçat'", "tr": "Cevap vermek", "note": "", "c": ["b4"]},
+{"ru": "спрашивать", "pr": "spraşivat'", "tr": "Sormak / Soru yöneltmek", "note": "", "c": ["b4"]},
+{"ru": "изучать", "pr": "izuçat'", "tr": "Öğrenmek / İncelemek", "note": "", "c": ["b4"]},
+{"ru": "учить", "pr": "uçit'", "tr": "Ders çalışmak / Ezberlemek", "note": "", "c": ["b4"]},
+{"ru": "объяснять", "pr": "ob''yasnyat'", "tr": "Açıklamak / Anlatmak", "note": "", "c": ["b4"]},
+{"ru": "проверять", "pr": "proveryat'", "tr": "Kontrol etmek", "note": "", "c": ["b4"]},
+{"ru": "рассказывать", "pr": "rasskazıvat'", "tr": "Anlatmak / Bahsetmek", "note": "", "c": ["b4"]},
+{"ru": "готовлю / готовить", "pr": "gotovit'", "tr": "Hazırlamak / Pişirmek", "note": "", "c": ["b4"]},
+{"ru": "завтракать", "pr": "zavtrakat'", "tr": "Kahvaltı yapmak", "note": "", "c": ["b4"]},
+{"ru": "обедать", "pr": "obedat'", "tr": "Öğle yemeği yemek", "note": "", "c": ["b4"]},
+{"ru": "ужинать", "pr": "ujinat'", "tr": "Akşam yemeği yemek", "note": "", "c": ["b4"]},
+{"ru": "говорить", "pr": "govorit'", "tr": "Konuşmak", "note": "", "c": ["b4"]},
+{"ru": "разговаривать", "pr": "razgovarivat'", "tr": "Sohbet etmek", "note": "", "c": ["b4"]},
+{"ru": "смотреть", "pr": "smotret'", "tr": "İzlemek / Bakmak", "note": "", "c": ["b4"]},
+{"ru": "играть", "pr": "igrat'", "tr": "Oynamak", "note": "", "c": ["b4"]},
+{"ru": "думать", "pr": "dumat'", "tr": "Düşünmek", "note": "", "c": ["b4"]},
+{"ru": "идти", "pr": "idti", "tr": "Gitmek (yürüyerek)", "note": "", "c": ["b4"]},
+{"ru": "заниматься", "pr": "zanimat'sya", "tr": "Ders çalışmak / Meşgul olmak", "note": "", "c": ["b4"]},
+{"ru": "сидеть", "pr": "sitet'", "tr": "Oturmak", "note": "", "c": ["b4"]},
+{"ru": "хорошо", "pr": "horoşo", "tr": "İyi / Güzel", "note": "", "c": ["b5"]},
+{"ru": "плохо", "pr": "ploho", "tr": "Kötü", "note": "", "c": ["b5"]},
+{"ru": "быстро", "pr": "bıstro", "tr": "Hızlı", "note": "", "c": ["b5"]},
+{"ru": "медленно", "pr": "medlenno", "tr": "Yavaş", "note": "", "c": ["b5"]},
+{"ru": "громко", "pr": "gromko", "tr": "Yüksek sesle", "note": "", "c": ["b5"]},
+{"ru": "тихо", "pr": "tiho", "tr": "Alçak sesle / Sessizce", "note": "", "c": ["b5"]},
+{"ru": "правильно", "pr": "pravil'no", "tr": "Doğru", "note": "", "c": ["b5"]},
+{"ru": "неправильно", "pr": "nepravil'no", "tr": "Yanlış", "note": "", "c": ["b5"]},
+{"ru": "внимательно", "pr": "vnimatel'no", "tr": "Dikkatle", "note": "", "c": ["b5"]},
+{"ru": "невнимательно", "pr": "nevnimatel'no", "tr": "Dikkatsizce", "note": "", "c": ["b5"]},
+{"ru": "интересно", "pr": "interesno", "tr": "İlgi çekici / İlginç", "note": "", "c": ["b5"]},
+{"ru": "отлично", "pr": "otliçno", "tr": "Mükemmel / Harika", "note": "", "c": ["b5"]},
+{"ru": "раньше", "pr": "ran'şe", "tr": "Eskiden / Önceden", "note": "", "c": ["b5"]},
+{"ru": "сейчас", "pr": "seyças", "tr": "Şimdi / Şu an", "note": "", "c": ["b5"]},
+{"ru": "потом", "pr": "potom", "tr": "Sonra", "note": "", "c": ["b5"]},
+{"ru": "сегодня", "pr": "segodnya", "tr": "Bugün", "note": "", "c": ["b5"]},
+{"ru": "вчера", "pr": "vçera", "tr": "Dün", "note": "", "c": ["b5"]},
+{"ru": "завтра", "pr": "zavtra", "tr": "Yarın", "note": "", "c": ["b5"]},
+{"ru": "утром", "pr": "utrom", "tr": "Sabah / Sabahleyin", "note": "", "c": ["b5"]},
+{"ru": "днём", "pr": "dnëm", "tr": "Öğleyin / Gündüz", "note": "", "c": ["b5"]},
+{"ru": "вечером", "pr": "veçerom", "tr": "Akşam / Akşamleyin", "note": "", "c": ["b5"]},
+{"ru": "рано", "pr": "rano", "tr": "Erken", "note": "", "c": ["b5"]},
+{"ru": "поздно", "pr": "pozdno", "tr": "Geç", "note": "", "c": ["b5"]},
+{"ru": "немного", "pr": "nemnogo", "tr": "Biraz", "note": "", "c": ["b5"]},
+{"ru": "обычно", "pr": "obıçno", "tr": "Genellikle", "note": "", "c": ["b5"]},
+{"ru": "здесь", "pr": "zdes'", "tr": "Burada", "note": "", "c": ["b5"]},
+{"ru": "там", "pr": "tam", "tr": "Orada", "note": "", "c": ["b5"]},
+{"ru": "справа", "pr": "sprava", "tr": "Sağda", "note": "", "c": ["b5"]},
+{"ru": "слева", "pr": "sleva", "tr": "Solda", "note": "", "c": ["b5"]},
+{"ru": "по-русски", "pr": "po-russki", "tr": "Rusça (konuşmak/yazmak)", "note": "", "c": ["b5"]},
+{"ru": "по-английски", "pr": "po-angliyski", "tr": "İngilizce", "note": "", "c": ["b5"]},
+{"ru": "по-французски", "pr": "po-frantsuzski", "tr": "Fransızca", "note": "", "c": ["b5"]},
+{"ru": "понедельник", "pr": "v ponedel'nik", "tr": "Pazartesi günü", "note": "\"Ne zaman?\": в понедельник (v ponedel'nik)", "c": ["b6"]},
+{"ru": "вторник", "pr": "vo vtornik", "tr": "Salı günü", "note": "\"Ne zaman?\": во вторник (vo vtornik)", "c": ["b6"]},
+{"ru": "среда", "pr": "v sredu", "tr": "Çarşamba günü", "note": "\"Ne zaman?\": в среду (v sredu)", "c": ["b6"]},
+{"ru": "четверг", "pr": "v çetverg", "tr": "Perşembe günü", "note": "\"Ne zaman?\": в четверг (v çetverg)", "c": ["b6"]},
+{"ru": "пятница", "pr": "v pyatnitsu", "tr": "Cuma günü", "note": "\"Ne zaman?\": в пятницу (v pyatnitsu)", "c": ["b6"]},
+{"ru": "суббота", "pr": "v subbotu", "tr": "Cumartesi günü", "note": "\"Ne zaman?\": в субботу (v subbotu)", "c": ["b6"]},
+{"ru": "воскресенье", "pr": "v voskresen'ye", "tr": "Pazar günü", "note": "\"Ne zaman?\": в воскресенье (v voskresen'ye)", "c": ["b6"]},
+{"ru": "я / ты", "pr": "ya / tı", "tr": "Ben / Sen", "note": "", "c": ["b7"]},
+{"ru": "он / она / оно", "pr": "on / ona / ono", "tr": "O (Eril / Dişil / Nötr)", "note": "", "c": ["b7"]},
+{"ru": "мы / вы / они", "pr": "mı / vı / oni", "tr": "Biz / Siz / Onlar", "note": "", "c": ["b7"]},
+{"ru": "мой / моя / моё", "pr": "moy / moya / moyo", "tr": "Benim (Eril / Dişil / Nötr)", "note": "", "c": ["b7"]},
+{"ru": "твой / твоя / твоё", "pr": "tvoy / tvoya / tvoyo", "tr": "Senin (Eril / Dişil / Nötr)", "note": "", "c": ["b7"]},
+{"ru": "наш / наша / наше", "pr": "naş / naşa / naşe", "tr": "Bizim (Eril / Dişil / Nötr)", "note": "", "c": ["b7"]},
+{"ru": "ваш / ваша / ваше", "pr": "vaş / vaşa / vaşe", "tr": "Sizin (Eril / Dişil / Nötr)", "note": "", "c": ["b7"]},
+{"ru": "кто?", "pr": "kto?", "tr": "Kim?", "note": "", "c": ["b7"]},
+{"ru": "что?", "pr": "çto?", "tr": "Ne?", "note": "", "c": ["b7"]},
+{"ru": "как?", "pr": "kak?", "tr": "Nasıl?", "note": "", "c": ["b7"]},
+{"ru": "когда?", "pr": "kogda?", "tr": "Ne zaman?", "note": "", "c": ["b7"]},
+{"ru": "это", "pr": "eto", "tr": "Bu / Bunlar", "note": "", "c": ["b7"]},
+{"ru": "да / нет", "pr": "da / net", "tr": "Evet / Hayır", "note": "", "c": ["b7"]},
+{"ru": "не", "pr": "ne", "tr": "Değil / Olumsuzluk", "note": "", "c": ["b7"]},
+{"ru": "а", "pr": "a", "tr": "İse / Ve (Karşılaştırma)", "note": "", "c": ["b7"]},
+{"ru": "но", "pr": "no", "tr": "Ama / Fakat", "note": "", "c": ["b7"]},
+{"ru": "тоже", "pr": "toje", "tr": "De / Da / Ayrıca", "note": "", "c": ["b7"]},
+{"ru": "после (+ Genitive)", "pr": "posle", "tr": "-den/-dan sonra", "note": "", "c": ["b7"]}
+]};
