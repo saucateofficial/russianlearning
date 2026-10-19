@@ -3,30 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rusça Cinsiyet ve Kelime Oyunu</title>
+    <title>Rusça Öğrenme Merkezi</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
         .backface-hidden { backface-visibility: hidden; }
         .rotate-y-180 { transform: rotateY(180deg); }
+        body {
+            background-color: #0c1a17;
+            background-image: radial-gradient(circle at 50% 0%, #132e29 0%, #0c1a17 100%);
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="text-emerald-100 min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
     
-    <!-- Header -->
-    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 sticky top-0 z-50 shadow-md">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-xl font-bold text-blue-400 flex items-center gap-2">
-                    🇷🇺 Rusça Cinsiyet ve Kelime Çalışma Alanı
-                </h1>
-                <p class="text-xs text-slate-400">Flashcard, Eşleştirme ve Test Modülü</p>
+    <!-- Header / Navbar -->
+    <header class="w-full max-w-4xl mx-auto p-4 sm:p-6">
+        <div class="bg-[#102521] border border-[#1b3d36] shadow-2xl rounded-2xl py-4 px-6 flex flex-col sm:flex-row justify-between items-center gap-4 backdrop-blur-md">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700 flex items-center justify-center shadow-lg font-bold text-slate-900 text-lg">RU</div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-wide">Rusça Çalışma Alanı</h1>
+                    <p class="text-[11px] text-emerald-400/80">İnteraktif Eğitim Portalı</p>
+                </div>
             </div>
-            <nav class="flex gap-2">
-                <button onclick="switchTab('flashcards')" id="btn-flashcards" class="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white transition shadow">Flashcards</button>
-                <button onclick="switchTab('matching')" id="btn-matching" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-700 text-slate-300 hover:bg-slate-600 transition">Eşleştirme Oyunu</button>
-                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-700 text-slate-300 hover:bg-slate-600 transition">Test</button>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex gap-2 bg-[#0c1a17] p-1.5 rounded-xl border border-[#183630]">
+                <button onclick="switchTab('flashcards')" id="btn-flashcards" class="px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-900/40">Flashcards</button>
+                <button onclick="switchTab('matching')" id="btn-matching" class="px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all text-emerald-300/70 hover:text-white hover:bg-[#132e29]">Eşleştirme</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all text-emerald-300/70 hover:text-white hover:bg-[#132e29]">Test</button>
             </nav>
         </div>
     </header>
@@ -36,55 +43,55 @@
 
         <!-- FLASHCARDS SECTION -->
         <section id="section-flashcards" class="tab-content flex flex-col items-center gap-6">
-            <div class="w-full flex justify-between items-center text-sm text-slate-400 px-2">
-                <span id="fc-progress">Kart 1 / 60</span>
-                <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700">Çevirmek için karta tıklayın</span>
+            <div class="w-full flex justify-between items-center text-xs text-emerald-400/80 px-2 font-medium">
+                <span id="fc-progress" class="bg-[#102521] border border-[#1b3d36] px-3 py-1.5 rounded-lg shadow">Kart 1 / 150</span>
+                <span class="bg-[#102521] border border-[#1b3d36] px-3 py-1.5 rounded-lg shadow">Çevirmek için karta tıkla</span>
             </div>
 
             <!-- Card Element -->
-            <div class="w-full max-w-md h-72 perspective-1000 cursor-pointer" onclick="flipCard()">
-                <div id="flashcard-inner" class="relative w-full h-full duration-500 transform-style-3d shadow-xl rounded-2xl">
+            <div class="w-full max-w-md h-72 perspective-1000 cursor-pointer group" onclick="flipCard()">
+                <div id="flashcard-inner" class="relative w-full h-full duration-500 transform-style-3d shadow-2xl rounded-2xl">
                     <!-- Front -->
-                    <div class="absolute inset-0 w-full h-full bg-slate-800 border-2 border-slate-700 rounded-2xl flex flex-col items-center justify-center p-6 backface-hidden">
-                        <span id="fc-gender" class="text-xs uppercase tracking-widest text-blue-400 mb-2 font-semibold">Eril (Он)</span>
-                        <h2 id="fc-russian" class="text-4xl font-bold text-white mb-3 text-center">дом</h2>
-                        <p id="fc-pronounce" class="text-lg text-slate-400 italic">[ dom ]</p>
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#132e29] to-[#0f2420] border-2 border-[#1f4840] rounded-2xl flex flex-col items-center justify-center p-6 backface-hidden shadow-inner">
+                        <span id="fc-gender" class="text-[10px] uppercase tracking-widest text-emerald-400 bg-emerald-950/80 border border-emerald-800/50 px-3 py-1 rounded-full mb-4 font-semibold shadow">Kelime Seti</span>
+                        <h2 id="fc-russian" class="text-4xl font-black text-white mb-3 text-center tracking-tight">мальчик</h2>
+                        <p id="fc-pronounce" class="text-sm text-emerald-300/70 font-mono tracking-wider">[ mal'çik ]</p>
                     </div>
                     <!-- Back -->
-                    <div class="absolute inset-0 w-full h-full bg-slate-700 border-2 border-slate-600 rounded-2xl flex flex-col items-center justify-center p-6 backface-hidden rotate-y-180">
-                        <span class="text-xs uppercase tracking-widest text-emerald-400 mb-2 font-semibold">Türkçe Anlamı</span>
-                        <h2 id="fc-turkish" class="text-3xl font-bold text-white text-center">ev / bina</h2>
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#0f2420] to-[#132e29] border-2 border-teal-800/60 rounded-2xl flex flex-col items-center justify-center p-6 backface-hidden rotate-y-180 shadow-inner">
+                        <span class="text-[10px] uppercase tracking-widest text-teal-400 bg-teal-950/80 border border-teal-800/50 px-3 py-1 rounded-full mb-4 font-semibold shadow">Türkçe Anlamı</span>
+                        <h2 id="fc-turkish" class="text-3xl font-black text-white text-center tracking-tight">Erkek çocuk</h2>
                     </div>
                 </div>
             </div>
 
             <!-- Controls -->
             <div class="flex gap-4 w-full max-w-md">
-                <button onclick="prevCard()" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 py-3 rounded-xl font-medium transition flex items-center justify-center gap-2">⬅ Önceki</button>
-                <button onclick="nextCard()" class="flex-1 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-medium transition flex items-center justify-center gap-2">Sonraki ➡</button>
+                <button onclick="prevCard()" class="flex-1 bg-[#102521] hover:bg-[#16352f] border border-[#1b3d36] py-3 rounded-xl text-sm font-semibold transition shadow-lg flex items-center justify-center gap-2 text-emerald-200">⬅ Önceki</button>
+                <button onclick="nextCard()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl text-sm font-semibold transition shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 text-white">Sonraki ➡</button>
             </div>
         </section>
 
         <!-- MATCHING GAME SECTION -->
         <section id="section-matching" class="tab-content hidden flex flex-col gap-6">
-            <div class="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700">
+            <div class="flex justify-between items-center bg-[#102521] p-4 rounded-xl border border-[#1b3d36] shadow-xl">
                 <div>
-                    <h3 class="font-bold text-lg text-white">Kelime Eşleştirme Bulmacası</h3>
-                    <p class="text-xs text-slate-400">Rusça kelimeleri doğru Türkçe anlamlarıyla eşleştir.</p>
+                    <h3 class="font-bold text-sm text-white">Kelime Eşleştirme Bulmacası</h3>
+                    <p class="text-[11px] text-emerald-400/70">Rusça kelimeleri doğru anlamlarıyla eşleştir.</p>
                 </div>
-                <div class="text-right">
-                    <span class="text-sm text-slate-400">Skor: <strong id="match-score" class="text-emerald-400">0</strong> / 6</span>
-                    <button onclick="initMatchingGame()" class="block text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded mt-1 text-slate-200 transition">Yeniden Başlat</button>
+                <div class="text-right flex items-center gap-3">
+                    <span class="text-xs text-emerald-300">Skor: <strong id="match-score" class="text-emerald-400 text-sm font-bold">0</strong> / 6</span>
+                    <button onclick="initMatchingGame()" class="text-xs bg-[#16352f] hover:bg-[#1f4840] border border-[#235248] px-3 py-1.5 rounded-lg text-emerald-200 transition">Yenile</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="flex flex-col gap-3">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400">Rusça Kelimeler</h4>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 px-1">Rusça Kelimeler</h4>
                     <div id="matching-russian-col" class="flex flex-col gap-2"></div>
                 </div>
-                <div class="flex flex-col gap-3">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Türkçe Anlamları</h4>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-teal-400 px-1">Türkçe Anlamları</h4>
                     <div id="matching-turkish-col" class="flex flex-col gap-2"></div>
                 </div>
             </div>
@@ -92,98 +99,152 @@
 
         <!-- QUIZ SECTION -->
         <section id="section-quiz" class="tab-content hidden flex flex-col gap-6">
-            <div id="quiz-container" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
-                <div class="flex justify-between items-center mb-6 border-b border-slate-700 pb-4">
-                    <span id="quiz-progress" class="text-sm font-medium text-slate-400">Soru 1 / 10</span>
-                    <span id="quiz-score-badge" class="text-sm font-semibold bg-blue-900/50 text-blue-300 px-3 py-1 rounded-full border border-blue-800">Doğru: 0</span>
+            <div id="quiz-container" class="bg-[#102521] border border-[#1b3d36] rounded-2xl p-6 shadow-2xl">
+                <div class="flex justify-between items-center mb-6 border-b border-[#1b3d36] pb-4">
+                    <span id="quiz-progress" class="text-xs font-semibold text-emerald-400/80">Soru 1 / 10</span>
+                    <span id="quiz-score-badge" class="text-xs font-semibold bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full border border-emerald-800/60 shadow">Doğru: 0</span>
                 </div>
 
-                <h3 id="quiz-question" class="text-xl font-bold text-white mb-6">Rusça kelimenin Türkçe karşılığı nedir?</h3>
+                <h3 id="quiz-question" class="text-lg font-bold text-white mb-6 leading-relaxed">Rusça kelimenin Türkçe karşılığı nedir?</h3>
 
                 <div id="quiz-options" class="grid grid-cols-1 gap-3 mb-6"></div>
 
                 <div class="flex justify-end">
-                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl font-medium transition">Sonraki Soru ➡</button>
+                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition shadow-lg shadow-emerald-900/40">Sonraki Soru ➡</button>
                 </div>
             </div>
 
             <!-- Quiz Result Card -->
-            <div id="quiz-result" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center flex flex-col items-center gap-4">
-                <h3 class="text-2xl font-bold text-white">Test Tamamlandı! 🎉</h3>
-                <p id="quiz-final-score" class="text-lg text-slate-300">Skorun: 10 / 10</p>
-                <button onclick="restartQuiz()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl font-medium transition">Testi Yeniden Başlat</button>
+            <div id="quiz-result" class="hidden bg-[#102521] border border-[#1b3d36] rounded-2xl p-8 text-center flex flex-col items-center gap-4 shadow-2xl">
+                <h3 class="text-2xl font-black text-white">Test Tamamlandı! 🎉</h3>
+                <p id="quiz-final-score" class="text-sm text-emerald-300 font-medium">Skorun: 10 / 10</p>
+                <button onclick="restartQuiz()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition shadow-lg shadow-emerald-900/40">Testi Yeniden Başlat</button>
             </div>
         </section>
 
     </main>
 
-    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
-        Resimli Kitap Kelimeler Seti &copy; 2026
+    <footer class="text-center py-4 text-[11px] text-emerald-500/50 tracking-wide">
+        Rusça Eğitim Seti &copy; 2026
     </footer>
 
     <!-- Application Script -->
     <script>
         const vocabularyData = [
-            { ru: "дом", pron: "dom", tr: "ev / bina", gender: "Eril (Он)" },
-            { ru: "трамвай", pron: "tramvay", tr: "tramvay", gender: "Eril (Он)" },
-            { ru: "спутник", pron: "sputnik", tr: "uydu", gender: "Eril (Он)" },
-            { ru: "мальчик", pron: "mal'çik", tr: "erkek çocuk", gender: "Eril (Он)" },
-            { ru: "карандаш", pron: "karandaş", tr: "kurşun kalem", gender: "Eril (Он)" },
-            { ru: "нож", pron: "noj", tr: "bıçak", gender: "Eril (Он)" },
-            { ru: "мяч", pron: "myaç", tr: "top", gender: "Eril (Он)" },
-            { ru: "хлеб", pron: "hleb", tr: "ekmek", gender: "Eril (Он)" },
-            { ru: "остров", pron: "ostrov", tr: "ada", gender: "Eril (Он)" },
-            { ru: "поезд", pron: "poyezd", tr: "tren", gender: "Eril (Он)" },
-            { ru: "стол", pron: "stol", tr: "masa", gender: "Eril (Он)" },
-            { ru: "костюм", pron: "kostyum", tr: "takım elbise", gender: "Eril (Он)" },
-            { ru: "магазин", pron: "magazin", tr: "mağaza", gender: "Eril (Он)" },
-            { ru: "автобус", pron: "avtobus", tr: "otobüs", gender: "Eril (Он)" },
-            { ru: "космонавт", pron: "kosmonavt", tr: "astronot", gender: "Eril (Он)" },
-            { ru: "музей", pron: "muzey", tr: "müze", gender: "Eril (Он)" },
-            { ru: "чай", pron: "çay", tr: "çay", gender: "Eril (Он)" },
-            { ru: "вокзал", pron: "vokzal", tr: "tren garı", gender: "Eril (Он)" },
-            { ru: "врач", pron: "vraç", tr: "doktor", gender: "Eril (Он)" },
-            { ru: "картина", pron: "kartina", tr: "tablo / resim", gender: "Dişil (Она)" },
-            { ru: "семья", pron: "sem'ya", tr: "aile", gender: "Dişil (Она)" },
-            { ru: "учительница", pron: "uçitel'nitsa", tr: "kadın öğretmen", gender: "Dişil (Она)" },
-            { ru: "девочка", pron: "devoçka", tr: "kız çocuk", gender: "Dişil (Она)" },
-            { ru: "рыба", pron: "ryba", tr: "balık", gender: "Dişil (Она)" },
-            { ru: "книга", pron: "kniga", tr: "kitap", gender: "Dişil (Она)" },
-            { ru: "доска", pron: "doska", tr: "yazı tahtası", gender: "Dişil (Она)" },
-            { ru: "звезда", pron: "zvezda", tr: "yıldız", gender: "Dişil (Она)" },
-            { ru: "женщина", pron: "jenşçina", tr: "kadın", gender: "Dişil (Она)" },
-            { ru: "кухня", pron: "kuhnya", tr: "mutfak", gender: "Dişil (Она)" },
-            { ru: "вода", pron: "voda", tr: "su", gender: "Dişil (Она)" },
-            { ru: "комната", pron: "komnata", tr: "oda", gender: "Dişil (Она)" },
-            { ru: "работа", pron: "rabota", tr: "iş / çalışma", gender: "Dişil (Она)" },
-            { ru: "машина", pron: "maşina", tr: "araba", gender: "Dişil (Она)" },
-            { ru: "страна", pron: "strana", tr: "ülke", gender: "Dişil (Она)" },
-            { ru: "письмо", pron: "pis'mo", tr: "mektup", gender: "Nötr (Оно)" },
-            { ru: "платье", pron: "plat'ye", tr: "elbise", gender: "Nötr (Оно)" },
-            { ru: "окно", pron: "okno", tr: "pencere", gender: "Nötr (Оно)" },
-            { ru: "кресло", pron: "kreslo", tr: "tekli koltuk", gender: "Nötr (Оно)" },
-            { ru: "кольцо", pron: "kol'tso", tr: "yüzük", gender: "Nötr (Оно)" },
-            { ru: "дерево", pron: "derevo", tr: "ağaç", gender: "Nötr (Оно)" },
-            { ru: "яблоко", pron: "yabloko", tr: "elma", gender: "Nötr (Оно)" },
-            { ru: "солнце", pron: "solntse", tr: "güneş", gender: "Nötr (Оно)" },
-            { ru: "море", pron: "more", tr: "deniz", gender: "Nötr (Оно)" },
-            { ru: "время", pron: "vremya", tr: "zaman", gender: "Nötr (-мя)" },
-            { ru: "имя", pron: "imya", tr: "ad / isim", gender: "Nötr (-мя)" },
-            { ru: "учитель", pron: "uçitel'", tr: "öğretmen", gender: "Eril (-тель)" },
-            { ru: "портфель", pron: "portfel'", tr: "evrak çantası", gender: "Eril (Он)" },
-            { ru: "словарь", pron: "slovar'", tr: "sözlük", gender: "Eril (Он)" },
-            { ru: "дождь", pron: "dojd'", tr: "yağmur", gender: "Eril (Он)" },
-            { ru: "день", pron: "den'", tr: "gün", gender: "Eril (Он)" },
-            { ru: "мать", pron: "mat'", tr: "anne", gender: "Dişil (Она)" },
-            { ru: "дочь", pron: "doç'", tr: "kız evlat", gender: "Dişil (Она)" },
-            { ru: "дверь", pron: "dver'", tr: "kapı", gender: "Dişil (Она)" },
-            { ru: "тетрадь", pron: "tetrad'", tr: "defter", gender: "Dişil (Она)" },
-            { ru: "ночь", pron: "noç'", tr: "gece", gender: "Dişil (Она)" },
-            { ru: "любовь", pron: "lyubov'", tr: "aşk / sevgi", gender: "Dişil (Она)" },
-            { ru: "папа", pron: "papa", tr: "baba", gender: "Eril (Он - İstisna)" },
-            { ru: "дедушка", pron: "deduşka", tr: "dede", gender: "Eril (Он - İstisna)" },
-            { ru: "пальто", pron: "pal'to", tr: "palto", gender: "Nötr (Yabancı / Değişmez)" },
-            { ru: "кино", pron: "kino", tr: "sinema", gender: "Nötr (Yabancı / Değişmez)" }
+            // PDF 1 & PDF 2 Birleştirilmiş Kelime Listesi
+            { ru: "мальчик", pron: "mal'çik", tr: "Erkek çocuk", gender: "Eril (Он)" },
+            { ru: "девочка", pron: "devoçka", tr: "Kız çocuk", gender: "Dişil (Она)" },
+            { ru: "ребёнок", pron: "rebënok", tr: "Çocuk", gender: "Eril / Tekil" },
+            { ru: "дети", pron: "deti", tr: "Çocuklar", gender: "Çoğul" },
+            { ru: "человек", pron: "çelovek", tr: "İnsan", gender: "Eril" },
+            { ru: "люди", pron: "lyudi", tr: "İnsanlar / Halk", gender: "Çoğul" },
+            { ru: "брат", pron: "brat", tr: "Erkek kardeş", gender: "Eril (Он)" },
+            { ru: "сестра", pron: "sestra", tr: "Kız kardeş", gender: "Dişil (Она)" },
+            { ru: "отец", pron: "otets", tr: "Baba", gender: "Eril (Он)" },
+            { ru: "мать", pron: "mat'", tr: "Anne", gender: "Dişil (Она)" },
+            { ru: "дочь", pron: "doç'", tr: "Kız evlat", gender: "Dişil (Она)" },
+            { ru: "сын", pron: "sin", tr: "Oğul / Erkek evlat", gender: "Eril (Он)" },
+            { ru: "друг", pron: "drug", tr: "Arkadaş / Dost", gender: "Eril (Он)" },
+            { ru: "студент", pron: "student", tr: "Erkek üniversite öğrencisi", gender: "Eril (Он)" },
+            { ru: "студентка", pron: "studentka", tr: "Kız üniversite öğrencisi", gender: "Dişil (Она)" },
+            { ru: "врач", pron: "vraç", tr: "Doktor", gender: "Eril (Он)" },
+            { ru: "инженер", pron: "injener", tr: "Mühendis", gender: "Eril (Он)" },
+            { ru: "дом", pron: "dom", tr: "Ev / Bina", gender: "Eril (Он)" },
+            { ru: "улица", pron: "ulitsa", tr: "Cadde / Sokak", gender: "Dişil (Она)" },
+            { ru: "город", pron: "gorod", tr: "Şehir", gender: "Eril (Он)" },
+            { ru: "деревня", pron: "derevnya", tr: "Köy", gender: "Dişil (Она)" },
+            { ru: "школа", pron: "şkola", tr: "Okul", gender: "Dişil (Она)" },
+            { ru: "университет", pron: "universitet", tr: "Üniversite", gender: "Eril (Он)" },
+            { ru: "общежитие", pron: "obşçejitiye", tr: "Öğrenci yurdu", gender: "Nötr (Оно)" },
+            { ru: "магазин", pron: "magazin", tr: "Mağaza / Dükkan", gender: "Eril (Он)" },
+            { ru: "парк", pron: "park", tr: "Park", gender: "Eril (Он)" },
+            { ru: "сад", pron: "sad", tr: "Bahçe", gender: "Eril (Он)" },
+            { ru: "автобус", pron: "avtobus", tr: "Otobüs", gender: "Eril (Он)" },
+            { ru: "трамвай", pron: "tramvay", tr: "Tramvay", gender: "Eril (Он)" },
+            { ru: "машина", pron: "maşina", tr: "Araba", gender: "Dişil (Она)" },
+            { ru: "поезд", pron: "poyezd", tr: "Tren", gender: "Eril (Он)" },
+            { ru: "стол", pron: "stol", tr: "Masa", gender: "Eril (Он)" },
+            { ru: "стул", pron: "stul", tr: "Sandalye", gender: "Eril (Он)" },
+            { ru: "шкаф", pron: "şkaf", tr: "Dolap / Gardırop", gender: "Eril (Он)" },
+            { ru: "кресло", pron: "kreslo", tr: "Tekli koltuk / Berjer", gender: "Nötr (Оно)" },
+            { ru: "окно", pron: "okno", tr: "Pencere", gender: "Nötr (Оно)" },
+            { ru: "дверь", pron: "dver'", tr: "Kapı", gender: "Dişil (Она)" },
+            { ru: "книга", pron: "kniga", tr: "Kitap", gender: "Dişil (Она)" },
+            { ru: "тетрадь", pron: "tetrad'", tr: "Defter", gender: "Dişil (Она)" },
+            { ru: "учебник", pron: "uçebnik", tr: "Ders kitabı", gender: "Eril (Он)" },
+            { ru: "журнал", pron: "jurnal", tr: "Dergi", gender: "Eril (Он)" },
+            { ru: "газета", pron: "gazeta", tr: "Gazete", gender: "Dişil (Она)" },
+            { ru: "ручка", pron: "ruçka", tr: "Kalem (Tükenmez)", gender: "Dişil (Она)" },
+            { ru: "карандаш", pron: "karandaş", tr: "Kurşun kalem", gender: "Eril (Он)" },
+            { ru: "письмо", pron: "pis'mo", tr: "Mektup", gender: "Nötr (Оно)" },
+            { ru: "словарь", pron: "slovar'", tr: "Sözlük", gender: "Eril (Он)" },
+            { ru: "телевизор", pron: "televizor", tr: "Televizyon", gender: "Eril (Он)" },
+            { ru: "костюм", pron: "kostyum", tr: "Takım elbise", gender: "Eril (Он)" },
+            { ru: "портфель", pron: "portfel'", tr: "Çanta / Evrak çantası", gender: "Eril (Он)" },
+            { ru: "фотография", pron: "fotografiya", tr: "Fotoğraf", gender: "Dişil (Она)" },
+            { ru: "фильм", pron: "fil'm", tr: "Film", gender: "Eril (Он)" },
+            { ru: "урок", pron: "urok", tr: "Ders", gender: "Eril (Он)" },
+            { ru: "текст", pron: "tekst", tr: "Metin", gender: "Eril (Он)" },
+            { ru: "роман", pron: "roman", tr: "Roman", gender: "Eril (Он)" },
+            { ru: "слово", pron: "slovo", tr: "Kelime", gender: "Nötr (Оно)" },
+            { ru: "буква", pron: "bukva", tr: "Harf", gender: "Dişil (Она)" },
+            { ru: "правило", pron: "pravilo", tr: "Kural", gender: "Nötr (Оно)" },
+            { ru: "вопрос", pron: "vopros", tr: "Soru", gender: "Eril (Он)" },
+            { ru: "ответ", pron: "otvet", tr: "Cevap / Yanıt", gender: "Eril (Он)" },
+            { ru: "ошибка", pron: "oşibka", tr: "Hata / Yanlış", gender: "Dişil (Она)" },
+            { ru: "класс", pron: "klass", tr: "Sınıf / Derslik", gender: "Eril (Он)" },
+            { ru: "язык", pron: "yazık", tr: "Dil", gender: "Eril (Он)" },
+            { ru: "шахматы", pron: "şahmatı", tr: "Satranç", gender: "Çoğul" },
+            { ru: "футбол", pron: "futbol", tr: "Futbol", gender: "Eril (Он)" },
+            { ru: "теннис", pron: "tennis", tr: "Tenis", gender: "Eril (Он)" },
+            { ru: "читать", pron: "çitat'", tr: "Okumak", gender: "Fiil" },
+            { ru: "писать", pron: "pisat'", tr: "Yazmak", gender: "Fiil" },
+            { ru: "работать", pron: "rabotat'", tr: "Çalışmak", gender: "Fiil" },
+            { ru: "отдыхать", pron: "otdıhat'", tr: "Dinlenmek", gender: "Fiil" },
+            { ru: "знать", pron: "znat'", tr: "Bilmek", gender: "Fiil" },
+            { ru: "слушать", pron: "sluşat'", tr: "Dinlemek", gender: "Fiil" },
+            { ru: "понимать", pron: "ponimat'", tr: "Anlamak", gender: "Fiil" },
+            { ru: "говорить", pron: "govorit'", tr: "Konuşmak", gender: "Fiil" },
+            { ru: "смотреть", pron: "smotret'", tr: "İzlemek / Bakmak", gender: "Fiil" },
+            { ru: "играть", pron: "igrat'", tr: "Oynamak", gender: "Fiil" },
+            { ru: "думать", pron: "dumat'", tr: "Düşünmek", gender: "Fiil" },
+            { ru: "хорошо", pron: "horoşo", tr: "İyi / Güzel", gender: "Zarf" },
+            { ru: "плохо", pron: "ploho", tr: "Kötü", gender: "Zarf" },
+            { ru: "быстро", pron: "bistro", tr: "Hızlı", gender: "Zarf" },
+            { ru: "медленно", pron: "medlenno", tr: "Yavaş", gender: "Zarf" },
+            { ru: "сегодня", pron: "segodnya", tr: "Bugün", gender: "Zaman" },
+            { ru: "вчера", pron: "vçera", tr: "Dün", gender: "Zaman" },
+            { ru: "завтра", pron: "zavtra", tr: "Yarın", gender: "Zaman" },
+            { ru: "спутник", pron: "sputnik", tr: "Uydu", gender: "Eril (Он)" },
+            { ru: "нож", pron: "noj", tr: "Bıçak", gender: "Eril (Он)" },
+            { ru: "мяч", pron: "myaç", tr: "Top", gender: "Eril (Он)" },
+            { ru: "хлеб", pron: "hleb", tr: "Ekmek", gender: "Eril (Он)" },
+            { ru: "остров", pron: "ostrov", tr: "Ada", gender: "Eril (Он)" },
+            { ru: "музей", pron: "muzey", tr: "Müze", gender: "Eril (Он)" },
+            { ru: "чай", pron: "çay", tr: "Çay", gender: "Eril (Он)" },
+            { ru: "вокзал", pron: "vokzal", tr: "Tren garı", gender: "Eril (Он)" },
+            { ru: "семья", pron: "sem'ya", tr: "Aile", gender: "Dişil (Она)" },
+            { ru: "рыба", pron: "ryba", tr: "Balık", gender: "Dişil (Она)" },
+            { ru: "звезда", pron: "zvezda", tr: "Yıldız", gender: "Dişil (Она)" },
+            { ru: "кухня", pron: "kuhnya", tr: "Mutfak", gender: "Dişil (Она)" },
+            { ru: "вода", pron: "voda", tr: "Su", gender: "Dişil (Она)" },
+            { ru: "страна", pron: "strana", tr: "Ülke", gender: "Dişil (Она)" },
+            { ru: "платье", pron: "plat'ye", tr: "Elbise", gender: "Nötr (Оно)" },
+            { ru: "кольцо", pron: "kol'tso", tr: "Yüzük", gender: "Nötr (Оно)" },
+            { ru: "дерево", pron: "derevo", tr: "Ağaç", gender: "Nötr (Оно)" },
+            { ru: "яблоко", pron: "yabloko", tr: "Elma", gender: "Nötr (Оно)" },
+            { ru: "солнце", pron: "solntse", tr: "Güneş", gender: "Nötr (Оно)" },
+            { ru: "море", pron: "more", tr: "Deniz", gender: "Nötr (Оно)" },
+            { ru: "время", pron: "vremya", tr: "Zaman", gender: "Nötr (-мя)" },
+            { ru: "имя", pron: "imya", tr: "Ad / İsim", gender: "Nötr (-мя)" },
+            { ru: "дождь", pron: "dojd'", tr: "Yağmur", gender: "Eril (Он)" },
+            { ru: "день", pron: "den'", tr: "Gün", gender: "Eril (Он)" },
+            { ru: "ночь", pron: "noç'", tr: "Gece", gender: "Dişil (Она)" },
+            { ru: "любовь", pron: "lyubov'", tr: "Aşk / Sevgi", gender: "Dişil (Она)" },
+            { ru: "папа", pron: "papa", tr: "Baba", gender: "Eril (İstisna)" },
+            { ru: "дедушка", pron: "deduşka", tr: "Dede", gender: "Eril (İstisna)" },
+            { ru: "пальто", pron: "pal'to", tr: "Palto", gender: "Nötr (Değişmez)" },
+            { ru: "кино", pron: "kino", tr: "Sinema", gender: "Nötr (Değişmez)" }
         ];
 
         // Tab Switcher
@@ -194,9 +255,9 @@
             ['flashcards', 'matching', 'quiz'].forEach(t => {
                 const btn = document.getElementById('btn-' + t);
                 if (t === tabId) {
-                    btn.className = "px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white transition shadow";
+                    btn.className = "px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-900/40";
                 } else {
-                    btn.className = "px-4 py-2 rounded-lg text-sm font-medium bg-slate-700 text-slate-300 hover:bg-slate-600 transition";
+                    btn.className = "px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all text-emerald-300/70 hover:text-white hover:bg-[#132e29]";
                 }
             });
 
@@ -247,8 +308,6 @@
 
         // --- MATCHING GAME LOGIC ---
         let matchItems = [];
-        let selectedRussian = null;
-        let selectedTurkish = null;
         let matchedCount = 0;
 
         function initMatchingGame() {
@@ -268,15 +327,15 @@
 
             ruShuffled.forEach(item => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-left font-medium transition flex justify-between items-center";
-                btn.innerHTML = `<span>${item.ru}</span> <span class="text-xs text-slate-400">[${item.pron}]</span>`;
+                btn.className = "w-full p-3 bg-[#132e29] hover:bg-[#193c36] border border-[#1f4840] rounded-xl text-left text-xs font-medium transition flex justify-between items-center text-emerald-100 shadow";
+                btn.innerHTML = `<span>${item.ru}</span> <span class="text-[10px] text-emerald-400/70 font-mono">[${item.pron}]</span>`;
                 btn.onclick = () => selectRussian(item, btn);
                 ruCol.appendChild(btn);
             });
 
             trShuffled.forEach(item => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-left font-medium transition";
+                btn.className = "w-full p-3 bg-[#132e29] hover:bg-[#193c36] border border-[#1f4840] rounded-xl text-left text-xs font-medium transition text-emerald-100 shadow";
                 btn.innerText = item.tr;
                 btn.onclick = () => selectTurkish(item, btn);
                 trCol.appendChild(btn);
@@ -289,28 +348,28 @@
         let currentTrItem = null;
 
         function selectRussian(item, btn) {
-            if (btn.classList.contains('bg-emerald-900/50')) return;
-            if (activeRuBtn) activeRuBtn.classList.remove('border-blue-500', 'bg-slate-700');
+            if (btn.classList.contains('bg-emerald-950')) return;
+            if (activeRuBtn) activeRuBtn.classList.remove('border-emerald-400', 'bg-[#1c443d]');
             activeRuBtn = btn;
             currentRuItem = item;
-            btn.classList.add('border-blue-500', 'bg-slate-700');
+            btn.classList.add('border-emerald-400', 'bg-[#1c443d]');
             checkMatch();
         }
 
         function selectTurkish(item, btn) {
-            if (btn.classList.contains('bg-emerald-900/50')) return;
-            if (activeTrBtn) activeTrBtn.classList.remove('border-emerald-500', 'bg-slate-700');
+            if (btn.classList.contains('bg-emerald-950')) return;
+            if (activeTrBtn) activeTrBtn.classList.remove('border-teal-400', 'bg-[#1c443d]');
             activeTrBtn = btn;
             currentTrItem = item;
-            btn.classList.add('border-emerald-500', 'bg-slate-700');
+            btn.classList.add('border-teal-400', 'bg-[#1c443d]');
             checkMatch();
         }
 
         function checkMatch() {
             if (currentRuItem && currentTrItem) {
                 if (currentRuItem.ru === currentTrItem.ru) {
-                    activeRuBtn.className = "w-full p-3 bg-emerald-900/30 border border-emerald-600 rounded-xl text-left font-medium text-emerald-300 opacity-75 cursor-default flex justify-between items-center";
-                    activeTrBtn.className = "w-full p-3 bg-emerald-900/30 border border-emerald-600 rounded-xl text-left font-medium text-emerald-300 opacity-75 cursor-default";
+                    activeRuBtn.className = "w-full p-3 bg-emerald-950/60 border border-emerald-600 rounded-xl text-left text-xs font-medium text-emerald-300 opacity-60 cursor-default flex justify-between items-center shadow-inner";
+                    activeTrBtn.className = "w-full p-3 bg-emerald-950/60 border border-emerald-600 rounded-xl text-left text-xs font-medium text-emerald-300 opacity-60 cursor-default shadow-inner";
                     matchedCount++;
                     document.getElementById('match-score').innerText = matchedCount;
 
@@ -321,8 +380,8 @@
                         }, 300);
                     }
                 } else {
-                    activeRuBtn.classList.remove('border-blue-500', 'bg-slate-700');
-                    activeTrBtn.classList.remove('border-emerald-500', 'bg-slate-700');
+                    activeRuBtn.classList.remove('border-emerald-400', 'bg-[#1c443d]');
+                    activeTrBtn.classList.remove('border-teal-400', 'bg-[#1c443d]');
                 }
                 activeRuBtn = null;
                 activeTrBtn = null;
@@ -365,14 +424,14 @@
             const q = quizQuestions[currentQuizIndex];
             document.getElementById('quiz-progress').innerText = `Soru ${currentQuizIndex + 1} / 10`;
             document.getElementById('quiz-score-badge').innerText = `Doğru: ${quizScore}`;
-            document.getElementById('quiz-question').innerHTML = `"<span class="text-blue-400">${q.ru}</span>" <span class="text-xs text-slate-400">([${q.pron}] - ${q.gender})</span> kelimesinin Türkçe karşılığı nedir?`;
+            document.getElementById('quiz-question').innerHTML = `"<span class="text-emerald-400 font-bold">${q.ru}</span>" <span class="text-xs text-emerald-300/60 font-mono">([${q.pron}] - ${q.gender})</span> kelimesinin Türkçe karşılığı nedir?`;
             
             const optionsContainer = document.getElementById('quiz-options');
             optionsContainer.innerHTML = '';
 
             q.options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600 rounded-xl font-medium text-left transition text-white";
+                btn.className = "w-full p-3.5 bg-[#132e29] hover:bg-[#193c36] border border-[#1f4840] rounded-xl text-xs font-medium text-left transition text-emerald-100 shadow";
                 btn.innerText = opt;
                 btn.onclick = () => selectQuizOption(btn, opt, q.correct);
                 optionsContainer.appendChild(btn);
@@ -388,11 +447,11 @@
             const buttons = document.getElementById('quiz-options').children;
             for (let b of buttons) {
                 if (b.innerText === correct) {
-                    b.className = "w-full p-4 bg-emerald-900/60 border border-emerald-500 rounded-xl font-medium text-left text-white";
+                    b.className = "w-full p-3.5 bg-emerald-900/60 border border-emerald-500 rounded-xl text-xs font-medium text-left text-white shadow";
                 } else if (b === btn && selected !== correct) {
-                    b.className = "w-full p-4 bg-rose-900/60 border border-rose-500 rounded-xl font-medium text-left text-white";
+                    b.className = "w-full p-3.5 bg-rose-950/60 border border-rose-600 rounded-xl text-xs font-medium text-left text-white shadow";
                 } else {
-                    b.className = "w-full p-4 bg-slate-800/40 border border-slate-700/50 rounded-xl font-medium text-left text-slate-400";
+                    b.className = "w-full p-3.5 bg-[#102521] border border-[#183630] rounded-xl text-xs font-medium text-left text-emerald-500/50 shadow";
                 }
             }
 
